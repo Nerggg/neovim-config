@@ -1,4 +1,4 @@
--- updated in 18/3/2025
+-- updated in 19/3/2025 6:16
 vim.loader.enable()
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -35,10 +35,17 @@ vim.cmd('call plug#end()')
 
 -- Setup plugins
 require'hop'.setup {}
-require'indent_blankline'.setup {
-    -- for example, context is off by default, use this to turn it on
-    show_current_context = true,
-    show_current_context_start = true,
+--require'indent_blankline'.setup {
+--    show_current_context = true,
+--    show_current_context_start = true,
+--}
+require("ibl").setup {
+    indent = {
+        char = "│",
+    },
+    scope = {
+        enabled = true,
+    },
 }
 
 -- Setup nvim-tree with tab support
@@ -170,28 +177,32 @@ require('mason-lspconfig').setup_handlers({
 
   -- additional settings for lsp
   ["clangd"] = function()
-    lspconfig.clangd.setup({
-      capabilities = capabilities,
-      cmd = {
-        "clangd",
-        "--background-index",
-        "--clang-tidy",
-        "--header-insertion=iwyu",
-        "--completion-style=detailed",
-        "--function-arg-placeholders",
-        "--fallback-style=llvm"
-      },
-      init_options = {
-        compilationDatabasePath = "build",
-        fallbackFlags = {
-          "-std=c++17",
-          "-I/usr/include",
-          "-I/usr/local/include",
-          -- Tambahkan path ke header file lain yang Anda gunakan
-          -- contoh: "-I/path/to/your/include"
-        }
-      }
-    })
+      lspconfig.clangd.setup({
+          capabilities = capabilities,
+          cmd = {
+              "clangd",
+              "--background-index",
+              "--clang-tidy",
+              "--header-insertion=iwyu",
+              "--completion-style=detailed",
+              "--function-arg-placeholders",
+              "--fallback-style=llvm"
+          },
+          init_options = {
+              usePlaceholders = true,
+              completeUnimported = true,
+              clangdFileStatus = true
+          },
+          filetypes = { "c", "cpp", "objc", "objcpp", "h", "hpp" },
+          root_dir = function(fname)
+              return require("lspconfig.util").root_pattern(
+                  "compile_commands.json",
+                  "compile_flags.txt",
+                  ".git",
+                  "Makefile"
+              )(fname) or vim.fn.getcwd()
+          end,
+      })
   end,
 })
 
@@ -231,9 +242,9 @@ vim.o.shiftwidth = 4
 vim.g.mapleader = " "
 vim.cmd('colorscheme slate')
 -- Hopper Highlight settings
-vim.cmd('hi HopNextKey guifg=#FF0000')
-vim.cmd('hi HopNextKey1 guifg=#FF0000')
-vim.cmd('hi HopNextKey2 guifg=#0000FF')
+vim.cmd('hi HopNextKey guifg=#FFFFFF')
+vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
+vim.cmd('hi HopNextKey2 guifg=#00FF00')
 -- Keymaps
 vim.api.nvim_set_keymap('n', ':W', ':w', {noremap = true})
 vim.api.nvim_set_keymap('n', ':Q', ':q', {noremap = true})
@@ -287,3 +298,11 @@ vim.api.nvim_set_keymap('n', '<S-A-l>', ':tabmove +1<CR>', {noremap = true, sile
 
 -- Close tab with Alt+w
 vim.api.nvim_set_keymap('n', '<A-w>', ':tabclose<CR>', {noremap = true, silent = true})
+
+
+-- notes 
+-- 1. install xclip di linux kalo gabisa pake clipboard
+-- 2. cara install nvim versi baru di linux
+-- tar -xzf nvim-linux-x86_64.tar.gz
+-- sudo mv nvim-linux-x86_64 /usr/local/nvim
+-- sudo ln -s /usr/local/nvim/bin/nvim /usr/local/bin/nvim
