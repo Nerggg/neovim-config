@@ -1,4 +1,4 @@
--- updated in 19/3/2025 7:30
+-- updated in 19/3/2025 7:54
 vim.loader.enable()
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
