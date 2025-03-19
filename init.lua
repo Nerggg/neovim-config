@@ -1,4 +1,4 @@
--- updated in 19/3/2025 6:16
+-- updated in 19/3/2025 7:30
 vim.loader.enable()
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -93,6 +93,47 @@ require('lint').linters_by_ft = {
   c = {'cpplint'},
   cpp = {'cpplint'},
 }
+
+-- ignore linter warning
+local lint = require('lint')
+
+-- Configure flake8 to ignore only warnings (codes starting with W)
+lint.linters.flake8 = {
+  cmd = 'flake8',
+  args = {
+    '--ignore=W', -- Ignore only warnings (W), still show errors (E)
+    '--format=%(path)s:%(row)d:%(col)d:%(code)s:%(text)s',
+  },
+  stdin = true,
+  ignore_exitcode = true,
+}
+
+-- Configure cpplint to ignore warnings but keep errors
+lint.linters.cpplint = {
+  cmd = 'cpplint',
+  args = {
+    '--filter=-whitespace,-build,-readability', -- Ignore common warning categories
+    '--quiet',
+  },
+  stdin = false,
+  ignore_exitcode = true,
+}
+
+-- Add this to disable diagnostic virtual text for warnings but keep errors
+vim.diagnostic.config({
+  virtual_text = {
+    severity = { min = vim.diagnostic.severity.WARN + 1 }  -- Only show errors, not warnings
+  },
+  signs = {
+    severity = { min = vim.diagnostic.severity.WARN + 1 }  -- Only show signs for errors, not warnings
+  },
+  underline = {
+    severity = { min = vim.diagnostic.severity.WARN + 1 }  -- Only underline errors, not warnings
+  },
+  float = {
+    severity = { min = vim.diagnostic.severity.WARN + 1 }  -- Only show errors in hover window, not warnings
+  },
+})
 
 -- Jalankan linter secara otomatis saat menulis atau membuka file
 vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost" }, {
