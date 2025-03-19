@@ -305,8 +305,29 @@ vim.api.nvim_set_keymap('n', '<C-j>', '<C-W>j', {noremap = true})
 -- Tambahkan keymap untuk Mason
 -- Tambahkan keymap untuk menjalankan linter secara manual
 -- change theme lol
-vim.api.nvim_set_keymap('n', '<Leader>1', ':colorscheme lunaperche<CR>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<Leader>2', ':colorscheme slate<CR>', {noremap = true})
+-- Buat fungsi menjadi global agar bisa diakses dari keymap
+_G.set_colorscheme_and_highlight = function(colorscheme)
+  -- Set colorscheme
+  vim.cmd('colorscheme ' .. colorscheme)
+  
+  -- Selalu jalankan pengaturan highlight Hop setelah perubahan colorscheme
+  vim.cmd('hi HopNextKey guifg=#FFFFFF')
+  vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
+  vim.cmd('hi HopNextKey2 guifg=#00FF00')
+end
+
+-- Keymap untuk setiap colorscheme
+vim.api.nvim_set_keymap('n', '<Leader>1', 
+  [[<Cmd>lua set_colorscheme_and_highlight('lunaperche')<CR>]], 
+  {noremap = true, silent = true})
+
+vim.api.nvim_set_keymap('n', '<Leader>2', 
+  [[<Cmd>lua set_colorscheme_and_highlight('slate')<CR>]], 
+  {noremap = true, silent = true})
+
+vim.api.nvim_set_keymap('n', '<Leader>3', 
+  [[<Cmd>lua set_colorscheme_and_highlight('industry')<CR>]], 
+  {noremap = true, silent = true})
 
 -- Tab navigation keybindings
 -- Create new tab with Ctrl+t
