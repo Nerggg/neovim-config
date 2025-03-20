@@ -1,3 +1,4 @@
+-- C:\Users\Administrator\AppData\Local\nvim
 vim.loader.enable()
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -65,7 +66,7 @@ require'nvim-tree'.setup {
     },
 }
 
-require'toggleterm'.setup {}
+require('toggleterm').setup {}
 require'guess-indent'.setup {}
 
 -- LSP STUFFS BEGIN
@@ -291,16 +292,25 @@ vim.api.nvim_set_keymap('n', ':Q', ':q', {noremap = true})
 -- vim.api.nvim_set_keymap('n', '<F2>', ':HopAnywhere<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<F1>', ':HopWord<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<F2>', ':nohlsearch<CR>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<F3>', ':ToggleTerm<CR>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<F4>', ':NvimTreeOpen<CR>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<F5>', ':Mason<CR>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<F6>', ':GuessIndent<CR>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<F7>', ':lua require("lint").try_lint()<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<F3>', ':NvimTreeOpen<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<F4>', ':Mason<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<F5>', ':GuessIndent<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<F6>', ':lua require("lint").try_lint()<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<F12>', ':e $MYVIMRC<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-h>', '<C-W>h', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-l>', '<C-W>l', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-k>', '<C-W>k', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-j>', '<C-W>j', {noremap = true})
+
+vim.api.nvim_set_keymap('n', '<A-1>', ':ToggleTerm 1<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<A-2>', ':ToggleTerm 2<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<A-3>', ':ToggleTerm 3<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<A-4>', ':ToggleTerm 4<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<A-5>', ':ToggleTerm 5<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<A-6>', ':ToggleTerm 6<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<A-7>', ':ToggleTerm 7<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<A-8>', ':ToggleTerm 8<CR>', {noremap = true})
+
 -- Tambahkan keymap untuk Mason
 -- Tambahkan keymap untuk menjalankan linter secara manual
 -- change theme lol
@@ -341,16 +351,16 @@ vim.api.nvim_set_keymap('n', '<A-h>', ':tabprevious<CR>', {noremap = true, silen
 vim.api.nvim_set_keymap('n', '<A-l>', ':tabnext<CR>', {noremap = true, silent = true})
 
 -- Navigate with Alt+number to jump to specific tab
-vim.api.nvim_set_keymap('n', '<A-1>', '1gt', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<A-2>', '2gt', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<A-3>', '3gt', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<A-4>', '4gt', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<A-5>', '5gt', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<A-6>', '6gt', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<A-7>', '7gt', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<A-8>', '8gt', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<A-9>', '9gt', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<A-0>', ':tablast<CR>', {noremap = true, silent = true})
+--vim.api.nvim_set_keymap('n', '<A-1>', '1gt', {noremap = true, silent = true})
+--vim.api.nvim_set_keymap('n', '<A-2>', '2gt', {noremap = true, silent = true})
+--vim.api.nvim_set_keymap('n', '<A-3>', '3gt', {noremap = true, silent = true})
+--vim.api.nvim_set_keymap('n', '<A-4>', '4gt', {noremap = true, silent = true})
+--vim.api.nvim_set_keymap('n', '<A-5>', '5gt', {noremap = true, silent = true})
+--vim.api.nvim_set_keymap('n', '<A-6>', '6gt', {noremap = true, silent = true})
+--vim.api.nvim_set_keymap('n', '<A-7>', '7gt', {noremap = true, silent = true})
+--vim.api.nvim_set_keymap('n', '<A-8>', '8gt', {noremap = true, silent = true})
+--vim.api.nvim_set_keymap('n', '<A-9>', '9gt', {noremap = true, silent = true})
+--vim.api.nvim_set_keymap('n', '<A-0>', ':tablast<CR>', {noremap = true, silent = true})
 
 -- Move tabs with Shift+Alt+left/right
 vim.api.nvim_set_keymap('n', '<S-A-Left>', ':tabmove -1<CR>', {noremap = true, silent = true})
