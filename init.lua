@@ -1,4 +1,3 @@
--- updated in 19/3/2025 7:54
 vim.loader.enable()
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -89,9 +88,9 @@ require('mason-lspconfig').setup({
 })
 -- Setup nvim-lint
 require('lint').linters_by_ft = {
-  python = {'flake8'},
-  c = {'cpplint'},
-  cpp = {'cpplint'},
+  --python = {'flake8'},
+  --c = {'cpplint'},
+  --cpp = {'cpplint'},
 }
 
 -- ignore linter warning
