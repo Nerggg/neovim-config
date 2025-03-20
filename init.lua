@@ -66,7 +66,9 @@ require'nvim-tree'.setup {
     },
 }
 
-require('toggleterm').setup {}
+require('toggleterm').setup {
+  direction = 'tab',
+}
 require'guess-indent'.setup {}
 
 -- LSP STUFFS BEGIN
@@ -92,6 +94,7 @@ require('lint').linters_by_ft = {
   --python = {'flake8'},
   --c = {'cpplint'},
   --cpp = {'cpplint'},
+  --java = {'checkstyle'},
 }
 
 -- ignore linter warning
@@ -118,6 +121,15 @@ lint.linters.cpplint = {
   stdin = false,
   ignore_exitcode = true,
 }
+
+--lint.linters.checkstyle = {
+--  cmd = 'checkstyle',
+--  args = {
+--    '--exclude-regexp', 'warning',
+--  },
+--  stdin = true,
+--  ignore_exitcode = true,
+--}
 
 -- Add this to disable diagnostic virtual text for warnings but keep errors
 vim.diagnostic.config({
@@ -289,6 +301,7 @@ vim.cmd('hi HopNextKey2 guifg=#00FF00')
 -- Keymaps
 vim.api.nvim_set_keymap('n', ':W', ':w', {noremap = true})
 vim.api.nvim_set_keymap('n', ':Q', ':q', {noremap = true})
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', {noremap = true})
 -- vim.api.nvim_set_keymap('n', '<F2>', ':HopAnywhere<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<F1>', ':HopWord<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<F2>', ':nohlsearch<CR>', {noremap = true})
@@ -296,6 +309,7 @@ vim.api.nvim_set_keymap('n', '<F3>', ':NvimTreeOpen<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<F4>', ':Mason<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<F5>', ':GuessIndent<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<F6>', ':lua require("lint").try_lint()<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<F11>', ':source $MYVIMRC<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<F12>', ':e $MYVIMRC<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-h>', '<C-W>h', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-l>', '<C-W>l', {noremap = true})
