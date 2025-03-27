@@ -1,4 +1,5 @@
 -- C:\Users\Administrator\AppData\Local\nvim
+-- ~/.config/nvim/
 vim.loader.enable()
 vim.g.loaded_netrw = 1 
 vim.g.loaded_netrwPlugin = 1
@@ -36,10 +37,6 @@ vim.cmd('call plug#end()')
 
 -- Setup plugins
 require 'hop'.setup {}
---require'indent_blankline'.setup {
---    show_current_context = true,
---    show_current_context_start = true,
---}
 require("ibl").setup {
   indent = {
     char = "│",
@@ -306,7 +303,7 @@ vim.cmd('hi HopNextKey2 guifg=#00FF00')
 vim.api.nvim_set_keymap('n', ':W', ':w', { noremap = true })
 vim.api.nvim_set_keymap('n', ':Q', ':q', { noremap = true })
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
--- vim.api.nvim_set_keymap('n', '<F2>', ':HopAnywhere<CR>', {noremap = true})
+-- vim.api.nvim_set_keymap('n', '<F1>', ':HopAnywhere<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<F1>', ':HopWord<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<F2>', ':nohlsearch<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<F3>', ':NvimTreeOpen<CR>', { noremap = true })
@@ -439,37 +436,23 @@ require('gitsigns').setup {
       opts.buffer = bufnr
       vim.keymap.set(mode, l, r, opts)
     end
-
-    -- Navigation
-    map('n', ']c', function()
-      if vim.wo.diff then return ']c' end
-      vim.schedule(function() gs.next_hunk() end)
-      return '<Ignore>'
-    end, {expr=true})
-
-    map('n', '[c', function()
-      if vim.wo.diff then return '[c' end
-      vim.schedule(function() gs.prev_hunk() end)
-      return '<Ignore>'
-    end, {expr=true})
-
     -- Actions
-    map('n', '<leader>hs', gs.stage_hunk)
-    map('n', '<leader>hr', gs.reset_hunk)
-    map('v', '<leader>hs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-    map('v', '<leader>hr', function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-    map('n', '<leader>hS', gs.stage_buffer)
-    map('n', '<leader>hu', gs.undo_stage_hunk)
-    map('n', '<leader>hR', gs.reset_buffer)
-    map('n', '<leader>hp', gs.preview_hunk)
-    map('n', '<leader>hb', function() gs.blame_line{full=true} end)
-    map('n', '<leader>tb', gs.toggle_current_line_blame)
-    map('n', '<leader>hd', gs.diffthis)
-    map('n', '<leader>hD', function() gs.diffthis('~') end)
+    -- map('n', '<leader>hs', gs.stage_hunk)
+    -- map('n', '<leader>hr', gs.reset_hunk)
+    -- map('v', '<leader>hs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+    -- map('v', '<leader>hr', function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+    -- map('n', '<leader>hS', gs.stage_buffer)
+    -- map('n', '<leader>hu', gs.undo_stage_hunk)
+    -- map('n', '<leader>hR', gs.reset_buffer)
+    -- map('n', '<leader>hp', gs.preview_hunk)
+    -- map('n', '<leader>hb', function() gs.blame_line{full=true} end)
+    -- map('n', '<leader>tb', gs.toggle_current_line_blame)
+    -- map('n', '<leader>hd', gs.diffthis)
+    -- map('n', '<leader>hD', function() gs.diffthis('~') end)
     map('n', '<leader>td', gs.toggle_deleted)
 
     -- Text object
-    map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+    -- map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
   end
 }
 
