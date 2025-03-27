@@ -290,6 +290,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- Basic settings
 vim.o.number = true
 vim.o.relativenumber = true
+vim.api.nvim_create_autocmd("TermOpen", {
+  group = vim.api.nvim_create_augroup("TerminalRelativeNumber", { clear = true }),
+  callback = function()
+    vim.wo.relativenumber = true
+    vim.wo.number = true
+  end
+})
 vim.o.linebreak = true
 vim.o.laststatus = 2
 vim.o.shiftwidth = 4
