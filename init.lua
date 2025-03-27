@@ -1,6 +1,6 @@
 -- C:\Users\Administrator\AppData\Local\nvim
 vim.loader.enable()
-vim.g.loaded_netrw = 1
+vim.g.loaded_netrw = 1 
 vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
@@ -15,6 +15,7 @@ vim.cmd('Plug \'nvim-tree/nvim-web-devicons\'')
 vim.cmd('Plug \'nvim-tree/nvim-tree.lua\'')
 vim.cmd('Plug \'akinsho/toggleterm.nvim\'')
 vim.cmd('Plug \'NMAC427/guess-indent.nvim\'')
+vim.cmd('Plug \'lewis6991/gitsigns.nvim\'')
 
 -- LSP STUFFS BEGIN
 vim.cmd('Plug \'mfussenegger/nvim-lint\'')
@@ -156,6 +157,7 @@ vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost" }, {
 
 local lspconfig = require('lspconfig')
 
+
 -- Setup nvim-cmp
 local cmp = require('cmp')
 local luasnip = require('luasnip')
@@ -257,6 +259,8 @@ require('mason-lspconfig').setup_handlers({
       end,
     })
   end,
+
+  --lspconfig.kotlin_language_server.setup{}
 })
 
 -- lsp keymapping
@@ -309,6 +313,8 @@ vim.api.nvim_set_keymap('n', '<F3>', ':NvimTreeOpen<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<F4>', ':Mason<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<F5>', ':GuessIndent<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<F6>', ':lua require("lint").try_lint()<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<F7>', ':Gitsigns toggle_signs<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<F8>', ':Gitsigns toggle_current_line_blame<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<F11>', ':source $MYVIMRC<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<F12>', ':e $MYVIMRC<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-h>', '<C-W>h', { noremap = true })
@@ -385,6 +391,90 @@ vim.api.nvim_set_keymap('n', '<S-A-l>', ':tabmove +1<CR>', { noremap = true, sil
 -- Close tab with Alt+w
 vim.api.nvim_set_keymap('n', '<A-w>', ':tabclose<CR>', { noremap = true, silent = true })
 
+require('gitsigns').setup {
+  signs = {
+    add          = { text = '│' },
+    change       = { text = '│' },
+    delete       = { text = '_' },
+    topdelete    = { text = '‾' },
+    changedelete = { text = '~' },
+    untracked    = { text = '┆' },
+  },
+  signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+  numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+  linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+  word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
+  watch_gitdir = {
+    follow_files = true
+  },
+  auto_attach = true,
+  attach_to_untracked = true,
+  current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+  current_line_blame_opts = {
+    virt_text = true,
+    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+    delay = 1000,
+    ignore_whitespace = false,
+    virt_text_priority = 100,
+  },
+  current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
+  sign_priority = 6,
+  update_debounce = 100,
+  status_formatter = nil, -- Use default
+  max_file_length = 40000,
+  preview_config = {
+    -- Options passed to nvim_open_win
+    border = 'single',
+    style = 'minimal',
+    relative = 'cursor',
+    row = 0,
+    col = 1
+  },
+  -- Keymaps for git signs operations
+  on_attach = function(bufnr)
+    local gs = package.loaded.gitsigns
+
+    local function map(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
+    end
+
+    -- Navigation
+    map('n', ']c', function()
+      if vim.wo.diff then return ']c' end
+      vim.schedule(function() gs.next_hunk() end)
+      return '<Ignore>'
+    end, {expr=true})
+
+    map('n', '[c', function()
+      if vim.wo.diff then return '[c' end
+      vim.schedule(function() gs.prev_hunk() end)
+      return '<Ignore>'
+    end, {expr=true})
+
+    -- Actions
+    map('n', '<leader>hs', gs.stage_hunk)
+    map('n', '<leader>hr', gs.reset_hunk)
+    map('v', '<leader>hs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+    map('v', '<leader>hr', function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+    map('n', '<leader>hS', gs.stage_buffer)
+    map('n', '<leader>hu', gs.undo_stage_hunk)
+    map('n', '<leader>hR', gs.reset_buffer)
+    map('n', '<leader>hp', gs.preview_hunk)
+    map('n', '<leader>hb', function() gs.blame_line{full=true} end)
+    map('n', '<leader>tb', gs.toggle_current_line_blame)
+    map('n', '<leader>hd', gs.diffthis)
+    map('n', '<leader>hD', function() gs.diffthis('~') end)
+    map('n', '<leader>td', gs.toggle_deleted)
+
+    -- Text object
+    map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+  end
+}
+
+vim.api.nvim_set_keymap('n', '<C-n>', ':Gitsigns next_hunk<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-p>', ':Gitsigns prev_hunk<CR>', { noremap = true, silent = true })
 
 -- notes
 -- 1. install xclip di linux kalo gabisa pake clipboard
