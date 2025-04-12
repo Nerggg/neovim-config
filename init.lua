@@ -472,3 +472,11 @@ vim.api.nvim_set_keymap('n', '<C-p>', ':Gitsigns prev_hunk<CR>', { noremap = tru
 -- tar -xzf nvim-linux-x86_64.tar.gz
 -- sudo mv nvim-linux-x86_64 /usr/local/nvim
 -- sudo ln -s /usr/local/nvim/bin/nvim /usr/local/bin/nvim
+
+-- installed lsp 
+--  Installed
+--    ✓ clangd
+--    ✓ docker-compose-language-service docker_compose_language_service
+--    ✓ dockerfile-language-server dockerls
+--    ✓ pyright
+--    ✓ typescript-language-server ts_ls
