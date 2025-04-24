@@ -32,6 +32,11 @@ vim.cmd('Plug \'saadparwaiz1/cmp_luasnip\'')
 vim.cmd('Plug \'rafamadriz/friendly-snippets\'')
 -- LSP STUFFS END
 
+-- Telescope
+vim.cmd('Plug \'nvim-lua/plenary.nvim\'') -- Dependensi Telescope
+vim.cmd('Plug \'nvim-telescope/telescope.nvim\', { \'tag\': \'0.1.4\' }') -- Telescope
+vim.cmd('Plug \'nvim-telescope/telescope-file-browser.nvim\'')
+
 -- Call plug#end()
 vim.cmd('call plug#end()')
 
@@ -68,6 +73,36 @@ require('toggleterm').setup {
   direction = 'tab',
 }
 require 'guess-indent'.setup {}
+
+-- Telescope
+require('telescope').setup {
+  defaults = {
+    mappings = {
+      i = {
+        ["<C-j>"] = "move_selection_next",
+        ["<C-k>"] = "move_selection_previous",
+      },
+    },
+    file_ignore_patterns = {
+      "node_modules",
+      ".git",
+      "target",
+      "build",
+      "dist",
+    },
+  },
+  pickers = {
+    find_files = {
+      theme = "dropdown",
+      previewer = false,
+    },
+    live_grep = {
+      theme = "dropdown",
+    },
+  },
+}
+
+require('telescope').load_extension('file_browser')
 
 -- LSP STUFFS BEGIN
 -- Setup mason.nvim
@@ -463,8 +498,17 @@ require('gitsigns').setup {
   end
 }
 
+-- Telescope
+vim.api.nvim_set_keymap('n', '<C-A-f>', '<cmd>Telescope live_grep<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-A-p>', '<cmd>Telescope find_files<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>Telescope buffers<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>Telescope git_files<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fr', '<cmd>Telescope oldfiles<CR>', { noremap = true, silent = true })
+
 vim.api.nvim_set_keymap('n', '<C-n>', ':Gitsigns next_hunk<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-p>', ':Gitsigns prev_hunk<CR>', { noremap = true, silent = true })
+
 
 -- notes
 -- 1. install xclip di linux kalo gabisa pake clipboard
