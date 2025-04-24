@@ -34,7 +34,7 @@ vim.cmd('Plug \'rafamadriz/friendly-snippets\'')
 
 -- Telescope
 vim.cmd('Plug \'nvim-lua/plenary.nvim\'') -- Dependensi Telescope
-vim.cmd('Plug \'nvim-telescope/telescope.nvim\', { \'tag\': \'0.1.4\' }') -- Telescope
+vim.cmd('Plug \'nvim-telescope/telescope.nvim\'') -- Telescope
 vim.cmd('Plug \'nvim-telescope/telescope-file-browser.nvim\'')
 
 -- Call plug#end()
