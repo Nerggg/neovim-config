@@ -221,7 +221,7 @@ cmp.setup({
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    --['<CR>'] = cmp.mapping.confirm({ select = true }),
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -367,6 +367,7 @@ vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true }) -- Exit
 
 -- Navigation and plugin keymaps
 vim.api.nvim_set_keymap('n', '<F1>', ':HopWord<CR>', { noremap = true }) -- Hop to word
+vim.api.nvim_set_keymap('i', '<F1>', '', { noremap = true }) -- Disable help
 vim.api.nvim_set_keymap('n', '<F2>', ':nohlsearch<CR>', { noremap = true }) -- Clear search highlights
 vim.api.nvim_set_keymap('n', '<F3>', ':NvimTreeOpen<CR>', { noremap = true }) -- Open nvim-tree
 vim.api.nvim_set_keymap('n', '<F4>', ':Mason<CR>', { noremap = true }) -- Open Mason
