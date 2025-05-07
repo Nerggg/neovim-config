@@ -365,6 +365,10 @@ vim.api.nvim_set_keymap('n', ':W', ':w', { noremap = true }) -- Save file
 vim.api.nvim_set_keymap('n', ':Q', ':q', { noremap = true }) -- Quit
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true }) -- Exit terminal mode
 
+-- Copy pasting helper
+vim.api.nvim_set_keymap('v', '<C-c>', '"+y', { noremap = true })
+vim.api.nvim_set_keymap('v', '<C-x>', '"+d', { noremap = true })
+
 -- Navigation and plugin keymaps
 vim.api.nvim_set_keymap('n', '<F1>', ':HopWord<CR>', { noremap = true }) -- Hop to word
 vim.api.nvim_set_keymap('i', '<F1>', '', { noremap = true }) -- Disable help
@@ -508,3 +512,4 @@ vim.api.nvim_set_keymap('n', '<C-p>', ':Gitsigns prev_hunk<CR>', { noremap = tru
 --    ✓ dockerfile-language-server dockerls
 --    ✓ pyright
 --    ✓ typescript-language-server ts_ls
+--    ✓ tailwindcss-language-server tailwindcss
