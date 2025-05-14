@@ -369,9 +369,11 @@ vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true }) -- Exit
 vim.api.nvim_set_keymap('v', '<C-c>', '"+y', { noremap = true })
 vim.api.nvim_set_keymap('v', '<C-x>', '"+d', { noremap = true })
 
--- Move to end of line
-vim.api.nvim_set_keymap('n', '9', '<S-$>', { noremap = true })
-vim.api.nvim_set_keymap('v', '9', '<S-$>', { noremap = true })
+-- Move to end or beginning of line
+vim.api.nvim_set_keymap('n', '9', '0', { noremap = true })
+vim.api.nvim_set_keymap('v', '9', '0', { noremap = true })
+vim.api.nvim_set_keymap('n', '0', '<S-$>', { noremap = true })
+vim.api.nvim_set_keymap('v', '0', '<S-$>', { noremap = true })
 
 -- Navigation and plugin keymaps
 vim.api.nvim_set_keymap('n', '<F1>', ':HopWord<CR>', { noremap = true }) -- Hop to word
