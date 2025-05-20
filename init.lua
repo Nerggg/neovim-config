@@ -352,7 +352,7 @@ vim.o.linebreak = true -- Wrap lines at convenient points
 vim.o.laststatus = 2 -- Always show status line
 vim.o.shiftwidth = 4 -- Indentation width
 vim.g.mapleader = " " -- Set leader key to space
-vim.cmd('colorscheme slate') -- Set default colorscheme
+vim.cmd('colorscheme lunaperche') -- Set default colorscheme
 
 -- Hopper Highlight settings for hop.nvim
 vim.cmd('hi HopNextKey guifg=#FFFFFF')
@@ -377,7 +377,7 @@ vim.api.nvim_set_keymap('v', '=', '<S-$>', { noremap = true })
 
 -- Open new view
 vim.api.nvim_set_keymap('n', '<C-A-x>', ':new<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-A-v>', ':vsplit | wincmd l<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-A-v>', ':botright vnew<CR>', { noremap = true, silent = true })
 
 -- Navigation and plugin keymaps
 vim.api.nvim_set_keymap('n', '<F1>', ':HopWord<CR>', { noremap = true }) -- Hop to word
