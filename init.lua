@@ -100,6 +100,7 @@ require('telescope').setup {
       i = {
         ["<C-j>"] = "move_selection_next",
         ["<C-k>"] = "move_selection_previous",
+        ["<C-d>"] = "delete_buffer",
       },
     },
     file_ignore_patterns = {
