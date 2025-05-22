@@ -371,10 +371,8 @@ vim.api.nvim_set_keymap('v', '<C-c>', '"+y', { noremap = true })
 vim.api.nvim_set_keymap('v', '<C-x>', '"+d', { noremap = true })
 
 -- Move to end or beginning of line
-vim.api.nvim_set_keymap('n', '-', '0', { noremap = true })
-vim.api.nvim_set_keymap('v', '-', '0', { noremap = true })
-vim.api.nvim_set_keymap('n', '=', '<S-$>', { noremap = true })
-vim.api.nvim_set_keymap('v', '=', '<S-$>', { noremap = true })
+vim.api.nvim_set_keymap('n', '-', '<S-$>', { noremap = true })
+vim.api.nvim_set_keymap('v', '-', '<S-$>', { noremap = true })
 
 -- Open new view
 vim.api.nvim_set_keymap('n', '<C-A-x>', ':new<CR>', { noremap = true, silent = true })
@@ -524,3 +522,9 @@ vim.api.nvim_set_keymap('n', '<C-p>', ':Gitsigns prev_hunk<CR>', { noremap = tru
 --    ✓ pyright
 --    ✓ typescript-language-server ts_ls
 --    ✓ tailwindcss-language-server tailwindcss
+--
+--  Installed
+--    ✓ pyright
+--    ✓ tailwindcss-language-server tailwindcss
+--    ✓ clangd
+--    ✓ typescript-language-server ts_ls
