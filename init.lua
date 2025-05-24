@@ -370,7 +370,7 @@ vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true }) -- Exit
 -- Copy pasting helper
 vim.api.nvim_set_keymap('v', '<C-c>', '"+y', { noremap = true })
 vim.api.nvim_set_keymap('v', '<C-x>', '"+d', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-a>', 'gg<S-v>G', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-a>', 'G<S-$>v0gg', { noremap = true })
 
 -- Move to end or beginning of line
 vim.api.nvim_set_keymap('n', '-', '<S-$>', { noremap = true })
