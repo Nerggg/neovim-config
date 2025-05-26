@@ -525,11 +525,13 @@ _G.close_window_and_buffer = function()
 end
 
 -- Override the :q and :Q commands to use the custom function
-vim.api.nvim_set_keymap('n', ':Q', ':lua _G.close_window_and_buffer()', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', ':q', ':lua _G.close_window_and_buffer()', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ':Q', ':lua _G.close_window_and_buffer()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ':q', ':lua _G.close_window_and_buffer()<CR>', { noremap = true, silent = true })
 
 -- Override the <A-w> keymap to use the custom tab close function
 vim.api.nvim_set_keymap('n', '<A-w>', ':lua _G.close_tab_and_buffer()<CR>', { noremap = true, silent = true })
+-- Close tab without deleting from buffer
+vim.api.nvim_set_keymap('n', '<C-A-w>', ':tabclose<CR>', { noremap = true, silent = true })
 
 -- Configure gitsigns for git integration
 require('gitsigns').setup {
