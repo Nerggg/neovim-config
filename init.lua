@@ -518,7 +518,7 @@ _G.close_window_and_buffer = function()
   end
 
   -- Close the window and delete the buffer
-  vim.cmd('q')
+  vim.cmd('q!')
   if vim.api.nvim_buf_is_valid(buf) then
     vim.api.nvim_buf_delete(buf, { force = true })
   end
