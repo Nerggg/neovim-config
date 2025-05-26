@@ -364,7 +364,6 @@ vim.cmd('hi HopNextKey2 guifg=#00FF00')
 -- Keymap Configurations
 -- Basic commands
 vim.api.nvim_set_keymap('n', ':W', ':w', { noremap = true }) -- Save file
-vim.api.nvim_set_keymap('n', ':Q', ':q', { noremap = true }) -- Quit
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true }) -- Exit terminal mode
 
 -- Copy pasting helper
@@ -443,6 +442,32 @@ vim.api.nvim_set_keymap('n', '<S-A-Right>', ':tabmove +1<CR>', { noremap = true,
 vim.api.nvim_set_keymap('n', '<S-A-h>', ':tabmove -1<CR>', { noremap = true, silent = true }) -- Move tab left (vim-style)
 vim.api.nvim_set_keymap('n', '<S-A-l>', ':tabmove +1<CR>', { noremap = true, silent = true }) -- Move tab right (vim-style)
 
+-- Function to close window and delete buffer with unsaved changes warning
+_G.close_window_and_buffer = function()
+  local buf = vim.api.nvim_get_current_buf()
+  local buf_modified = vim.api.nvim_buf_get_option(buf, 'modified')
+
+  -- Check if the buffer has unsaved changes
+  if buf_modified then
+    local choice = vim.fn.confirm(
+      "File has unsaved changes. Close without saving? (y/n)",
+      "&Yes\n&No",
+      2, -- Set Cancel as the default choice
+      "Warn"
+    )
+    if choice ~= 1 then
+      print("Quit cancelled")
+      return
+    end
+  end
+
+  -- Close the window and delete the buffer
+  vim.cmd('q')
+  if vim.api.nvim_buf_is_valid(buf) then
+    vim.api.nvim_buf_delete(buf, { force = true })
+  end
+end
+
 -- Function to close tab and delete buffer with unsaved changes warning
 _G.close_tab_and_buffer = function()
   local buf = vim.api.nvim_get_current_buf()
@@ -456,7 +481,7 @@ _G.close_tab_and_buffer = function()
       2, -- Set Cancel as the default choice
       "Warn"
     )
-    if choice ~= 1 then -- If choice is not "No" (1), treat as Cancel (including Esc or invalid input)
+    if choice ~= 1 then
       print("Tab close cancelled")
       return
     end
@@ -469,7 +494,11 @@ _G.close_tab_and_buffer = function()
   end
 end
 
--- Override the <A-w> keymap to use the custom function
+-- Override the :q command to use the custom function
+vim.api.nvim_set_keymap('n', ':Q', ':lua _G.close_window_and_buffer()', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ':q', ':lua _G.close_window_and_buffer()', { noremap = true, silent = true })
+
+-- Override the <A-w> keymap to use the custom tab close function
 vim.api.nvim_set_keymap('n', '<A-w>', ':lua _G.close_tab_and_buffer()<CR>', { noremap = true, silent = true })
 
 -- Configure gitsigns for git integration
