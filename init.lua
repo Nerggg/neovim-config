@@ -442,7 +442,35 @@ vim.api.nvim_set_keymap('n', '<S-A-Left>', ':tabmove -1<CR>', { noremap = true, 
 vim.api.nvim_set_keymap('n', '<S-A-Right>', ':tabmove +1<CR>', { noremap = true, silent = true }) -- Move tab right
 vim.api.nvim_set_keymap('n', '<S-A-h>', ':tabmove -1<CR>', { noremap = true, silent = true }) -- Move tab left (vim-style)
 vim.api.nvim_set_keymap('n', '<S-A-l>', ':tabmove +1<CR>', { noremap = true, silent = true }) -- Move tab right (vim-style)
-vim.api.nvim_set_keymap('n', '<A-w>', ':tabclose<CR>', { noremap = true, silent = true }) -- Close tab
+
+-- Function to close tab and delete buffer with unsaved changes warning
+_G.close_tab_and_buffer = function()
+  local buf = vim.api.nvim_get_current_buf()
+  local buf_modified = vim.api.nvim_buf_get_option(buf, 'modified')
+
+  -- Check if the buffer has unsaved changes
+  if buf_modified then
+    local choice = vim.fn.confirm(
+      "File has unsaved changes. Close without saving? (y/n)",
+      "&Yes\n&No",
+      2, -- Set Cancel as the default choice
+      "Warn"
+    )
+    if choice ~= 1 then -- If choice is not "No" (1), treat as Cancel (including Esc or invalid input)
+      print("Tab close cancelled")
+      return
+    end
+  end
+
+  -- Close the tab and delete the buffer
+  vim.cmd('tabclose')
+  if vim.api.nvim_buf_is_valid(buf) then
+    vim.api.nvim_buf_delete(buf, { force = true })
+  end
+end
+
+-- Override the <A-w> keymap to use the custom function
+vim.api.nvim_set_keymap('n', '<A-w>', ':lua _G.close_tab_and_buffer()<CR>', { noremap = true, silent = true })
 
 -- Configure gitsigns for git integration
 require('gitsigns').setup {
