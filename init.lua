@@ -435,8 +435,12 @@ vim.api.nvim_set_keymap('n', '<Leader>3',
 vim.api.nvim_set_keymap('n', '<C-t>', ':tabnew<CR>', { noremap = true, silent = true }) -- Create new tab
 vim.api.nvim_set_keymap('n', '<A-Left>', ':tabprevious<CR>', { noremap = true, silent = true }) -- Previous tab
 vim.api.nvim_set_keymap('n', '<A-Right>', ':tabnext<CR>', { noremap = true, silent = true }) -- Next tab
-vim.api.nvim_set_keymap('n', '<A-h>', ':tabprevious<CR>', { noremap = true, silent = true }) -- Previous tab (vim-style)
-vim.api.nvim_set_keymap('n', '<A-l>', ':tabnext<CR>', { noremap = true, silent = true }) -- Next tab (vim-style)
+
+-- vim.api.nvim_set_keymap('n', '<A-h>', ':tabprevious<CR>', { noremap = true, silent = true }) -- Previous tab (vim-style)
+-- vim.api.nvim_set_keymap('n', '<A-l>', ':tabnext<CR>', { noremap = true, silent = true }) -- Next tab (vim-style)
+vim.api.nvim_set_keymap('n', '<A-l>', ':normal <C-l><CR>:tabnext<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<A-h>', ':normal <C-l><CR>:tabprevious<CR>', { noremap = true, silent = true })
+
 vim.api.nvim_set_keymap('n', '<S-A-Left>', ':tabmove -1<CR>', { noremap = true, silent = true }) -- Move tab left
 vim.api.nvim_set_keymap('n', '<S-A-Right>', ':tabmove +1<CR>', { noremap = true, silent = true }) -- Move tab right
 vim.api.nvim_set_keymap('n', '<S-A-h>', ':tabmove -1<CR>', { noremap = true, silent = true }) -- Move tab left (vim-style)
@@ -527,6 +531,7 @@ end
 -- Override the :q and :Q commands to use the custom function
 vim.api.nvim_set_keymap('n', ':Q', ':lua _G.close_window_and_buffer()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', ':q', ':lua _G.close_window_and_buffer()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ':aqa', ':qa<CR>', { noremap = true, silent = true })
 
 -- Override the <A-w> keymap to use the custom tab close function
 vim.api.nvim_set_keymap('n', '<A-w>', ':lua _G.close_tab_and_buffer()<CR>', { noremap = true, silent = true })
