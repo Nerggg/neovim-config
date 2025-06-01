@@ -438,8 +438,8 @@ vim.api.nvim_set_keymap('n', '<A-Right>', ':tabnext<CR>', { noremap = true, sile
 
 -- vim.api.nvim_set_keymap('n', '<A-h>', ':tabprevious<CR>', { noremap = true, silent = true }) -- Previous tab (vim-style)
 -- vim.api.nvim_set_keymap('n', '<A-l>', ':tabnext<CR>', { noremap = true, silent = true }) -- Next tab (vim-style)
-vim.api.nvim_set_keymap('n', '<A-l>', ':normal <C-l><CR>:tabnext<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<A-h>', ':normal <C-l><CR>:tabprevious<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<A-l>', ':normal <C-l><CR>:tabnext<CR>:normal <C-l><CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<A-h>', ':normal <C-l><CR>:tabprevious<CR>:normal <C-l><CR>', { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('n', '<S-A-Left>', ':tabmove -1<CR>', { noremap = true, silent = true }) -- Move tab left
 vim.api.nvim_set_keymap('n', '<S-A-Right>', ':tabmove +1<CR>', { noremap = true, silent = true }) -- Move tab right
