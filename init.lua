@@ -83,6 +83,9 @@ require 'nvim-tree'.setup {
       close = true,
     },
   },
+  git = {
+    ignore = false, -- Show files listed in .gitignore
+  },
 }
 
 -- Configure toggleterm to open in a tab
