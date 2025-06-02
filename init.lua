@@ -358,6 +358,7 @@ vim.o.laststatus = 2 -- Always show status line
 vim.o.shiftwidth = 4 -- Indentation width
 vim.g.mapleader = " " -- Set leader key to space
 vim.cmd('colorscheme lunaperche') -- Set default colorscheme
+vim.cmd('hi LineNr guifg=#FFFFFF')
 
 -- Hopper Highlight settings for hop.nvim
 vim.cmd('hi HopNextKey guifg=#FFFFFF')
@@ -416,6 +417,9 @@ vim.api.nvim_set_keymap('n', '<A-8>', ':ToggleTerm 8<CR>', { noremap = true }) -
 _G.set_colorscheme_and_highlight = function(colorscheme)
   -- Set colorscheme
   vim.cmd('colorscheme ' .. colorscheme)
+
+  -- Set line number color to white
+  vim.cmd('hi LineNr guifg=#FFFFFF')
 
   -- Reapply hop.nvim highlight settings after colorscheme change
   vim.cmd('hi HopNextKey guifg=#FFFFFF')
