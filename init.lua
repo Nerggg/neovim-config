@@ -385,8 +385,8 @@ vim.api.nvim_set_keymap('n', '<C-A-x>', ':new<CR>', { noremap = true, silent = t
 vim.api.nvim_set_keymap('n', '<C-A-v>', ':botright vnew<CR>', { noremap = true, silent = true })
 
 -- Navigation and plugin keymaps
-vim.api.nvim_set_keymap('n', '<F1>', ':HopWord<CR>', { noremap = true }) -- Hop to word
-vim.api.nvim_set_keymap('i', '<F1>', '', { noremap = true }) -- Disable help
+vim.api.nvim_set_keymap('n', '<F1>', ':HopWord<CR>', { noremap = true }) -- Hop to word in normal mode
+vim.api.nvim_set_keymap('i', '<F1>', '<Esc>:HopWord<CR>', { noremap = true }) -- Hop to word in insert mode
 vim.api.nvim_set_keymap('n', '<F2>', ':nohlsearch<CR>', { noremap = true }) -- Clear search highlights
 vim.api.nvim_set_keymap('n', '<F3>', ':NvimTreeOpen<CR>', { noremap = true }) -- Open nvim-tree
 vim.api.nvim_set_keymap('n', '<F4>', ':Mason<CR>', { noremap = true }) -- Open Mason
