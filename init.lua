@@ -361,8 +361,9 @@ vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true }) -- Exit
 -- Copy pasting helper
 vim.api.nvim_set_keymap('v', '<C-c>', '"+y', { noremap = true })
 vim.api.nvim_set_keymap('v', '<C-x>', '"+d', { noremap = true })
--- vim.api.nvim_set_keymap('n', '<C-a>', 'G<S-$>v0gg', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-a>', 'gg0v<S-$>Gh', { noremap = true })
+vim.api.nvim_set_keymap('i', '<C-v>', '<Esc>"+p', { noremap = true })
+vim.api.nvim_set_keymap('t', '<C-v>', '<C-\\><C-n>"+pa', { noremap = true })
 
 -- Navigate with hjkl in insert mode
 vim.api.nvim_set_keymap('i', '<A-h>', '<Left>', { noremap = true, silent = true })
