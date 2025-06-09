@@ -13,6 +13,11 @@ vim.opt.termguicolors = true
 -- Initialize Vim-Plug plugin manager
 vim.cmd('call plug#begin()')
 
+-- Custom colorscheme
+vim.cmd('Plug \'rebelot/kanagawa.nvim\'')
+vim.cmd('Plug \'rose-pine/neovim\'')
+vim.cmd('Plug \'sainnhe/everforest\'')
+
 -- Plugin configurations
 -- Movement and navigation
 vim.cmd('Plug \'phaazon/hop.nvim\'') -- Fast navigation within buffer
@@ -357,13 +362,13 @@ vim.o.linebreak = true -- Wrap lines at convenient points
 vim.o.laststatus = 2 -- Always show status line
 vim.o.shiftwidth = 4 -- Indentation width
 vim.g.mapleader = " " -- Set leader key to space
-vim.cmd('colorscheme lunaperche') -- Set default colorscheme
-vim.cmd('hi LineNr guifg=#FFFFFF')
-
--- Hopper Highlight settings for hop.nvim
-vim.cmd('hi HopNextKey guifg=#FFFFFF')
-vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
-vim.cmd('hi HopNextKey2 guifg=#00FF00')
+vim.cmd('colorscheme kanagawa') -- Set default colorscheme
+-- vim.cmd('hi LineNr guifg=#FFFFFF')
+-- 
+-- -- Hopper Highlight settings for hop.nvim
+-- vim.cmd('hi HopNextKey guifg=#FFFFFF')
+-- vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
+-- vim.cmd('hi HopNextKey2 guifg=#00FF00')
 
 -- Keymap Configurations
 -- Basic commands
@@ -439,15 +444,18 @@ _G.set_colorscheme_and_highlight = function(colorscheme)
 end
 
 -- Colorscheme keymaps
-vim.api.nvim_set_keymap('n', '<Leader>1',
-  [[<Cmd>lua set_colorscheme_and_highlight('lunaperche')<CR>]],
-  { noremap = true, silent = true }) -- Switch to lunaperche
-vim.api.nvim_set_keymap('n', '<Leader>2',
-  [[<Cmd>lua set_colorscheme_and_highlight('slate')<CR>]],
-  { noremap = true, silent = true }) -- Switch to slate
-vim.api.nvim_set_keymap('n', '<Leader>3',
-  [[<Cmd>lua set_colorscheme_and_highlight('industry')<CR>]],
-  { noremap = true, silent = true }) -- Switch to industry
+-- vim.api.nvim_set_keymap('n', '<leader>1',
+--   [[<Cmd>lua set_colorscheme_and_highlight('lunaperche')<CR>]],
+--   { noremap = true, silent = true }) -- Switch to lunaperche
+-- vim.api.nvim_set_keymap('n', '<leader>2',
+--   [[<Cmd>lua set_colorscheme_and_highlight('slate')<CR>]],
+--   { noremap = true, silent = true }) -- Switch to slate
+-- vim.api.nvim_set_keymap('n', '<leader>3',
+--   [[<Cmd>lua set_colorscheme_and_highlight('industry')<CR>]],
+--   { noremap = true, silent = true }) -- Switch to industry
+vim.api.nvim_set_keymap('n', '<leader>1', ':colorscheme kanagawa<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>2', ':colorscheme rose-pine<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>3', ':colorscheme everforest<CR>', { noremap = true, silent = true })
 
 -- Tab Navigation
 vim.api.nvim_set_keymap('n', '<C-t>', ':tabnew<CR>', { noremap = true, silent = true }) -- Create new tab
