@@ -263,57 +263,57 @@ cmp.setup({
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Setup LSP servers with mason-lspconfig
-require('mason-lspconfig').setup_handlers({
-  function(server_name)
-    lspconfig[server_name].setup({
-      capabilities = capabilities,
-    })
-  end,
+-- require('mason-lspconfig').setup_handlers({
+--   function(server_name)
+--     lspconfig[server_name].setup({
+--       capabilities = capabilities,
+--     })
+--   end,
 
-  -- Custom configuration for lua_ls
-  ["lua_ls"] = function()
-    lspconfig.lua_ls.setup({
-      capabilities = capabilities,
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = { 'vim' }
-          }
-        }
-      }
-    })
-  end,
+--   -- Custom configuration for lua_ls
+--   ["lua_ls"] = function()
+--     lspconfig.lua_ls.setup({
+--       capabilities = capabilities,
+--       settings = {
+--         Lua = {
+--           diagnostics = {
+--             globals = { 'vim' }
+--           }
+--         }
+--       }
+--     })
+--   end,
 
-  -- Custom configuration for clangd
-  ["clangd"] = function()
-    lspconfig.clangd.setup({
-      capabilities = capabilities,
-      cmd = {
-        "clangd",
-        "--background-index",
-        "--clang-tidy",
-        "--header-insertion=iwyu",
-        "--completion-style=detailed",
-        "--function-arg-placeholders",
-        "--fallback-style=llvm"
-      },
-      init_options = {
-        usePlaceholders = true,
-        completeUnimported = true,
-        clangdFileStatus = true
-      },
-      filetypes = { "c", "cpp", "objc", "objcpp", "h", "hpp" },
-      root_dir = function(fname)
-        return require("lspconfig.util").root_pattern(
-          "compile_commands.json",
-          "compile_flags.txt",
-          ".git",
-          "Makefile"
-        )(fname) or vim.fn.getcwd()
-      end,
-    })
-  end,
-})
+--   -- Custom configuration for clangd
+--   ["clangd"] = function()
+--     lspconfig.clangd.setup({
+--       capabilities = capabilities,
+--       cmd = {
+--         "clangd",
+--         "--background-index",
+--         "--clang-tidy",
+--         "--header-insertion=iwyu",
+--         "--completion-style=detailed",
+--         "--function-arg-placeholders",
+--         "--fallback-style=llvm"
+--       },
+--       init_options = {
+--         usePlaceholders = true,
+--         completeUnimported = true,
+--         clangdFileStatus = true
+--       },
+--       filetypes = { "c", "cpp", "objc", "objcpp", "h", "hpp" },
+--       root_dir = function(fname)
+--         return require("lspconfig.util").root_pattern(
+--           "compile_commands.json",
+--           "compile_flags.txt",
+--           ".git",
+--           "Makefile"
+--         )(fname) or vim.fn.getcwd()
+--       end,
+--     })
+--   end,
+-- })
 
 -- LSP keymappings
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -386,6 +386,7 @@ vim.api.nvim_set_keymap('i', '<A-h>', '<Left>', { noremap = true, silent = true 
 vim.api.nvim_set_keymap('i', '<A-j>', '<Down>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-k>', '<Up>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-l>', '<Right>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-s>', '<Esc>viw', { noremap = true, silent = true })
 
 -- Move to end or beginning of line
 vim.api.nvim_set_keymap('n', '-', '<S-$>', { noremap = true })
