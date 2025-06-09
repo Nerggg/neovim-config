@@ -148,8 +148,8 @@ require('mason').setup({
 -- Configure mason-lspconfig for automatic LSP server installation
 require('mason-lspconfig').setup({
   ensure_installed = {
-    'pyright',
-    'clangd',
+    -- 'pyright',
+    -- 'clangd',
   },
   automatic_installation = true,
 })
@@ -363,12 +363,12 @@ vim.o.laststatus = 2 -- Always show status line
 vim.o.shiftwidth = 4 -- Indentation width
 vim.g.mapleader = " " -- Set leader key to space
 vim.cmd('colorscheme kanagawa') -- Set default colorscheme
--- vim.cmd('hi LineNr guifg=#FFFFFF')
--- 
--- -- Hopper Highlight settings for hop.nvim
--- vim.cmd('hi HopNextKey guifg=#FFFFFF')
--- vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
--- vim.cmd('hi HopNextKey2 guifg=#00FF00')
+vim.cmd('hi LineNr guifg=#00FF00')
+
+-- Hopper Highlight settings for hop.nvim
+vim.cmd('hi HopNextKey guifg=#FFFFFF')
+vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
+vim.cmd('hi HopNextKey2 guifg=#00FF00')
 
 -- Keymap Configurations
 -- Basic commands
@@ -436,7 +436,7 @@ _G.set_colorscheme_and_highlight = function(colorscheme)
   vim.cmd('colorscheme ' .. colorscheme)
 
   -- Set line number color to white
-  vim.cmd('hi LineNr guifg=#FFFFFF')
+  vim.cmd('hi LineNr guifg=#00FF00')
 
   -- Reapply hop.nvim highlight settings after colorscheme change
   vim.cmd('hi HopNextKey guifg=#FFFFFF')
@@ -445,18 +445,15 @@ _G.set_colorscheme_and_highlight = function(colorscheme)
 end
 
 -- Colorscheme keymaps
--- vim.api.nvim_set_keymap('n', '<leader>1',
---   [[<Cmd>lua set_colorscheme_and_highlight('lunaperche')<CR>]],
---   { noremap = true, silent = true }) -- Switch to lunaperche
--- vim.api.nvim_set_keymap('n', '<leader>2',
---   [[<Cmd>lua set_colorscheme_and_highlight('slate')<CR>]],
---   { noremap = true, silent = true }) -- Switch to slate
--- vim.api.nvim_set_keymap('n', '<leader>3',
---   [[<Cmd>lua set_colorscheme_and_highlight('industry')<CR>]],
---   { noremap = true, silent = true }) -- Switch to industry
-vim.api.nvim_set_keymap('n', '<leader>1', ':colorscheme kanagawa<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>2', ':colorscheme rose-pine<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>3', ':colorscheme everforest<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>1',
+  [[<Cmd>lua set_colorscheme_and_highlight('kanagawa')<CR>]],
+  { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>2',
+  [[<Cmd>lua set_colorscheme_and_highlight('rose-pine')<CR>]],
+  { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>3',
+  [[<Cmd>lua set_colorscheme_and_highlight('everforest')<CR>]],
+  { noremap = true, silent = true })
 
 -- Tab Navigation
 vim.api.nvim_set_keymap('n', '<C-t>', ':tabnew<CR>', { noremap = true, silent = true }) -- Create new tab
