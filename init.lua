@@ -373,6 +373,9 @@ vim.api.nvim_set_keymap('i', '<A-a>', '<End>', { noremap = true, silent = true }
 vim.api.nvim_set_keymap('i', '<A-s>', '<Esc>viw', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<A-s>', 'viw', { noremap = true, silent = true })
 
+-- Disable recording
+vim.api.nvim_set_keymap('n', 'q', '<Nop>', { noremap = true, silent = true })
+
 -- Move to end or beginning of line
 vim.api.nvim_set_keymap('n', '-', '<S-$>', { noremap = true })
 vim.api.nvim_set_keymap('v', '-', '<S-$>', { noremap = true })
