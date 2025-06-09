@@ -376,6 +376,12 @@ vim.api.nvim_set_keymap('v', '<C-x>', '"+d', { noremap = true })
 -- vim.api.nvim_set_keymap('n', '<C-a>', 'G<S-$>v0gg', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-a>', 'gg0v<S-$>Gh', { noremap = true })
 
+-- Navigate with hjkl in insert mode
+vim.api.nvim_set_keymap('i', '<A-h>', '<Left>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-j>', '<Down>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-k>', '<Up>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-l>', '<Right>', { noremap = true, silent = true })
+
 -- Move to end or beginning of line
 vim.api.nvim_set_keymap('n', '-', '<S-$>', { noremap = true })
 vim.api.nvim_set_keymap('v', '-', '<S-$>', { noremap = true })
