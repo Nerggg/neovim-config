@@ -386,6 +386,7 @@ vim.api.nvim_set_keymap('n', '<C-A-v>', ':botright vnew<CR>', { noremap = true, 
 
 -- Save file and exit shortcut
 vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-s>', '<Esc>:w<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-A-q>', ':lua _G.close_window_and_buffer()<CR>', { noremap = true, silent = true })
 
 -- Navigation and plugin keymaps
@@ -539,12 +540,22 @@ _G.close_window_and_buffer = function()
   end
 end
 
+-- Function to handle <A-w> based on the number of tabs
+_G.handle_alt_w = function()
+  local tab_count = #vim.api.nvim_list_tabpages()
+  if tab_count > 1 then
+    _G.close_tab_and_buffer()
+  else
+    _G.close_window_and_buffer()
+  end
+end
+
 -- Override the :q and :Q commands to use the custom function
 vim.api.nvim_set_keymap('n', ':Q', ':lua _G.close_window_and_buffer()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', ':q', ':lua _G.close_window_and_buffer()<CR>', { noremap = true, silent = true })
 
--- Override the <A-w> keymap to use the custom tab close function
-vim.api.nvim_set_keymap('n', '<A-w>', ':lua _G.close_tab_and_buffer()<CR>', { noremap = true, silent = true })
+-- Override the <A-w> keymap to use the conditional function
+vim.api.nvim_set_keymap('n', '<A-w>', ':lua _G.handle_alt_w()<CR>', { noremap = true, silent = true })
 -- Close tab without deleting from buffer
 vim.api.nvim_set_keymap('n', '<C-A-w>', ':tabclose<CR>', { noremap = true, silent = true })
 
