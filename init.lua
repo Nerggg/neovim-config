@@ -346,7 +346,7 @@ vim.o.laststatus = 2 -- Always show status line
 vim.o.shiftwidth = 4 -- Indentation width
 vim.g.mapleader = " " -- Set leader key to space
 vim.cmd('colorscheme kanagawa') -- Set default colorscheme
-vim.cmd('hi LineNr guifg=#DCD7BA')
+vim.cmd('hi LineNr guifg=#FFFF00')
 
 -- Hopper Highlight settings for hop.nvim
 vim.cmd('hi HopNextKey guifg=#FFFFFF')
@@ -425,11 +425,11 @@ _G.set_colorscheme_and_highlight = function(colorscheme)
 
   -- Set LineNr color based on colorscheme for high contrast
   if colorscheme == 'kanagawa' then
-    vim.cmd('hi LineNr guifg=#DCD7BA') -- Soft off-white from Kanagawa for high contrast against dark background
+    vim.cmd('hi LineNr guifg=#FFFF00') -- Soft off-white from Kanagawa for high contrast against dark background
   elseif colorscheme == 'rose-pine' then
-    vim.cmd('hi LineNr guifg=#E0DEF4') -- Subtle lavender from Rose Pine for contrast and harmony
+    vim.cmd('hi LineNr guifg=#FFFF00') -- Subtle lavender from Rose Pine for contrast and harmony
   elseif colorscheme == 'everforest' then
-    vim.cmd('hi LineNr guifg=#D3C6AA') -- Warm off-white from Everforest for clear visibility
+    vim.cmd('hi LineNr guifg=#00FF00') -- Warm off-white from Everforest for clear visibility
   else
     vim.cmd('hi LineNr guifg=#FFFFFF') -- Fallback to white
   end
