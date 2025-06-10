@@ -394,11 +394,51 @@ vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', { noremap = true, silent = true 
 vim.api.nvim_set_keymap('i', '<C-s>', '<Esc>:w<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-A-q>', ':lua _G.close_window_and_buffer()<CR>', { noremap = true, silent = true })
 
+-- Function to check if current buffer is a terminal
+local function is_terminal_tab()
+  local buftype = vim.api.nvim_buf_get_option(0, 'buftype')
+  return buftype == 'terminal'
+end
+
+-- Function to open nvim-tree
+local function open_nvim_tree()
+  if not is_terminal_tab() then
+    vim.cmd('NvimTreeOpen')
+  end
+end
+
+-- Function to close nvim-tree
+local function close_nvim_tree()
+    vim.cmd('NvimTreeClose')
+end
+
+-- Autocommand to toggle nvim-tree on BufEnter
+vim.api.nvim_create_autocmd('BufEnter', {
+  callback = function()
+    if is_terminal_tab() then
+      close_nvim_tree()
+    end
+  end,
+  group = vim.api.nvim_create_augroup('NvimTreeAutoToggle', { clear = true }),
+})
+
+
+-- Function to toggle nvim-tree manually
+_G.open_nvim_tree_conditional = function()
+  if is_terminal_tab() then
+    print("Cannot open NvimTree in a terminal tab.")
+  else
+    open_nvim_tree()
+  end
+end
+
 -- Navigation and plugin keymaps
 vim.api.nvim_set_keymap('n', '<F1>', ':HopWord<CR>', { noremap = true }) -- Hop to word in normal mode
 vim.api.nvim_set_keymap('i', '<F1>', '<Esc>:HopWord<CR>', { noremap = true }) -- Hop to word in insert mode
 vim.api.nvim_set_keymap('n', '<F2>', ':nohlsearch<CR>', { noremap = true }) -- Clear search highlights
-vim.api.nvim_set_keymap('n', '<F3>', ':NvimTreeOpen<CR>', { noremap = true }) -- Open nvim-tree
+-- Keymap to toggle nvim-tree conditionally
+vim.api.nvim_set_keymap('n', '<F3>', ':lua _G.open_nvim_tree_conditional()<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<F3>', ':NvimTreeOpen<CR>', { noremap = true }) -- Open nvim-tree
 vim.api.nvim_set_keymap('n', '<F4>', ':Mason<CR>', { noremap = true }) -- Open Mason
 vim.api.nvim_set_keymap('n', '<F5>', ':GuessIndent<CR>', { noremap = true }) -- Run guess-indent
 vim.api.nvim_set_keymap('n', '<F6>', ':lua require("lint").try_lint()<CR>', { noremap = true }) -- Run linter
