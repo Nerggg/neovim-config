@@ -46,8 +46,6 @@ vim.cmd('Plug \'hrsh7th/cmp-nvim-lsp\'') -- LSP source for nvim-cmp
 vim.cmd('Plug \'hrsh7th/cmp-buffer\'') -- Buffer source for nvim-cmp
 vim.cmd('Plug \'hrsh7th/cmp-path\'') -- Path source for nvim-cmp
 vim.cmd('Plug \'L3MON4D3/LuaSnip\'') -- Snippet engine
-vim.cmd('Plug \'saadparwaiz1/cmp_luasnip\'') -- Luasnip source for nvim-cmp
-vim.cmd('Plug \'rafamadriz/friendly-snippets\'') -- Predefined snippets
 -- LSP STUFFS END
 
 -- Telescope plugins
@@ -55,8 +53,8 @@ vim.cmd('Plug \'nvim-lua/plenary.nvim\'') -- Telescope dependency
 vim.cmd('Plug \'nvim-telescope/telescope.nvim\'') -- Fuzzy finder
 vim.cmd('Plug \'nvim-telescope/telescope-file-browser.nvim\'') -- File browser extension
 
--- NEW: VimTeX for LaTeX editing
-vim.cmd('Plug \'lervag/vimtex\'') -- LaTeX plugin for Vim/Neovim
+-- LaTex Stuffs
+vim.cmd('Plug \'lervag/vimtex\'')
 
 -- Finalize Vim-Plug
 vim.cmd('call plug#end()')
@@ -136,34 +134,6 @@ require('telescope').setup {
 -- Load Telescope file browser extension
 require('telescope').load_extension('file_browser')
 
--- NEW: VimTeX configuration for LaTeX with Zathura
-vim.g.vimtex_view_method = 'zathura' -- Set Zathura as the PDF viewer
-vim.g.vimtex_compiler_method = 'latexmk' -- Use latexmk for compilation
-vim.g.vimtex_quickfix_enabled = 1 -- Enable quickfix window for errors
-vim.g.vimtex_quickfix_open_on_warning = 0 -- Don't open quickfix on warnings
-vim.g.vimtex_view_forward_search = 1 -- Enable forward search
-vim.g.vimtex_view_zathura_options = '-reuse-instance' -- Reuse Zathura instance
-vim.g.vimtex_compiler_latexmk = {
-  options = {
-    '-pdf',
-    '-interaction=nonstopmode',
-    '-synctex=1', -- Enable SyncTeX for forward/inverse search
-    '-file-line-error',
-  },
-}
--- Enable continuous compilation for live preview
-vim.g.vimtex_compiler_latexmk_engines = {
-  ['_'] = '-xelatex', -- Default to XeLaTeX, change to '-pdflatex' if preferred
-}
-vim.g.vimtex_complete_enabled = 1 -- Enable completion
-vim.g.vimtex_complete_close_braces = 1 -- Auto-close braces in completion
-
--- Optional: Keymaps for VimТеX
-vim.api.nvim_set_keymap('n SITE_URL<leader>ll', ':VimtexCompile<CR>', { noremap = true, silent = true }) -- Compile LaTeX
-vim.api.nvim_set_keymap('n', '<leader>lv', ':VimtexView<CR>', { noremap = true, silent = true }) -- View PDF
-vim.api.nvim_set_keymap('n', '<leader>lc', ':VimtexClean<CR>', { noremap = true, silent = true }) -- Clean auxiliary files
-vim.api.nvim_set_keymap('n', '<leader>le', ':VimtexErrors<CR>', { noremap = true, silent = true }) -- Show errors
-
 -- LSP STUFFS BEGIN
 -- Configure mason.nvim for LSP server management
 require('mason').setup({
@@ -191,8 +161,6 @@ require('lint').linters_by_ft = {
   --c = {'cpplint'},
   --cpp = {'cpplint'},
   --java = {'checkstyle'},
-  -- NEW: Add LaTeX linter
-  tex = {'chktex'},
 }
 
 -- Configure flake8 to ignore warnings
@@ -213,17 +181,6 @@ lint.linters.cpplint = {
   args = {
     '--filter=-whitespace,-build,-readability', -- Ignore common warning categories
     '--quiet',
-  },
-  stdin = false,
-  ignore_exitcode = true,
-}
-
--- NEW: Configure chktex for LaTeX linting
-lint.linters.chktex = {
-  cmd = 'chktex',
-  args = {
-    '-q', -- Quiet mode
-    '-f%l:%c:%k:%n:%m\n', -- Format: line:column:kind:code:message
   },
   stdin = false,
   ignore_exitcode = true,
@@ -257,18 +214,9 @@ local lspconfig = require('lspconfig')
 
 -- Configure nvim-cmp for autocompletion
 local cmp = require('cmp')
-local luasnip = require('luasnip')
-
--- Load VSCode-style snippets
-require('luasnip.loaders.from_vscode').lazy_load()
 
 -- Setup nvim-cmp with mappings and sources
 cmp.setup({
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -278,8 +226,6 @@ cmp.setup({
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
       else
         fallback()
       end
@@ -287,19 +233,13 @@ cmp.setup({
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
       else
         fallback()
       end
     end, { 'i', 's' }),
-  },
+  }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    -- NEW: Add VimTeX completion source
-    { name = 'vimtex' },
-  }, {
     { name = 'buffer' },
     { name = 'path' },
   })
@@ -391,6 +331,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 -- LSP STUFFS END
 
+-- LaTex Stuffs
+vim.g.vimtex_view_method = 'zathura' -- Mengatur zathura sebagai PDF viewer
+vim.g.vimtex_quickfix_mode = 0 -- Nonaktifkan quickfix otomatis
+vim.g.tex_flavor = 'latex' -- Tentukan flavor LaTeX
+
 -- Basic Neovim Settings
 vim.o.number = true -- Show line numbers
 vim.o.relativenumber = true -- Show relative line numbers
@@ -409,7 +354,7 @@ vim.o.laststatus = 2 -- Always show status line
 vim.o.shiftwidth = 4 -- Indentation width
 vim.g.mapleader = " " -- Set leader key to space
 vim.cmd('colorscheme kanagawa') -- Set default colorscheme
-vim.cmd('hi LineNr guifg=#00FF00')
+vim.cmd('hi LineNr guifg=#FFFF00')
 
 -- Hopper Highlight settings for hop.nvim
 vim.cmd('hi HopNextKey guifg=#FFFFFF')
@@ -424,16 +369,25 @@ vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true }) -- Exit
 -- Copy pasting helper
 vim.api.nvim_set_keymap('v', '<C-c>', '"+y', { noremap = true })
 vim.api.nvim_set_keymap('v', '<C-x>', '"+d', { noremap = true })
--- vim.api.nvim_set_keymap('n', '<C-a>', 'G<S-$>v0gg', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-a>', 'gg0v<S-$>Gh', { noremap = true })
+vim.api.nvim_set_keymap('i', '<C-v>', '<Esc>"+p', { noremap = true })
+vim.api.nvim_set_keymap('t', '<C-v>', '<C-\\><C-n>"+pa', { noremap = true })
 
 -- Navigate with hjkl in insert mode
 vim.api.nvim_set_keymap('i', '<A-h>', '<Left>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-j>', '<Down>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-k>', '<Up>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-l>', '<Right>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-a>', '<End>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-s>', '<Esc>viw', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<A-s>', 'viw', { noremap = true, silent = true })
+
+-- Quick tabbing
+vim.keymap.set('v', '<Tab>', '>gv', { noremap = true })
+vim.keymap.set('v', '<S-Tab>', '<gv', { noremap = true })
+
+-- Disable recording
+vim.api.nvim_set_keymap('n', 'q', '<Nop>', { noremap = true, silent = true })
 
 -- Move to end or beginning of line
 vim.api.nvim_set_keymap('n', '-', '<S-$>', { noremap = true })
@@ -448,11 +402,51 @@ vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', { noremap = true, silent = true 
 vim.api.nvim_set_keymap('i', '<C-s>', '<Esc>:w<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-A-q>', ':lua _G.close_window_and_buffer()<CR>', { noremap = true, silent = true })
 
+-- Function to check if current buffer is a terminal
+local function is_terminal_tab()
+  local buftype = vim.api.nvim_buf_get_option(0, 'buftype')
+  return buftype == 'terminal'
+end
+
+-- Function to open nvim-tree
+local function open_nvim_tree()
+  if not is_terminal_tab() then
+    vim.cmd('NvimTreeOpen')
+  end
+end
+
+-- Function to close nvim-tree
+local function close_nvim_tree()
+    vim.cmd('NvimTreeClose')
+end
+
+-- Autocommand to toggle nvim-tree on BufEnter
+vim.api.nvim_create_autocmd('BufEnter', {
+  callback = function()
+    if is_terminal_tab() then
+      close_nvim_tree()
+    end
+  end,
+  group = vim.api.nvim_create_augroup('NvimTreeAutoToggle', { clear = true }),
+})
+
+
+-- Function to toggle nvim-tree manually
+_G.open_nvim_tree_conditional = function()
+  if is_terminal_tab() then
+    print("Cannot open NvimTree in a terminal tab.")
+  else
+    open_nvim_tree()
+  end
+end
+
 -- Navigation and plugin keymaps
 vim.api.nvim_set_keymap('n', '<F1>', ':HopWord<CR>', { noremap = true }) -- Hop to word in normal mode
 vim.api.nvim_set_keymap('i', '<F1>', '<Esc>:HopWord<CR>', { noremap = true }) -- Hop to word in insert mode
 vim.api.nvim_set_keymap('n', '<F2>', ':nohlsearch<CR>', { noremap = true }) -- Clear search highlights
-vim.api.nvim_set_keymap('n', '<F3>', ':NvimTreeOpen<CR>', { noremap = true }) -- Open nvim-tree
+-- Keymap to toggle nvim-tree conditionally
+vim.api.nvim_set_keymap('n', '<F3>', ':lua _G.open_nvim_tree_conditional()<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<F3>', ':NvimTreeOpen<CR>', { noremap = true }) -- Open nvim-tree
 vim.api.nvim_set_keymap('n', '<F4>', ':Mason<CR>', { noremap = true }) -- Open Mason
 vim.api.nvim_set_keymap('n', '<F5>', ':GuessIndent<CR>', { noremap = true }) -- Run guess-indent
 vim.api.nvim_set_keymap('n', '<F6>', ':lua require("lint").try_lint()<CR>', { noremap = true }) -- Run linter
@@ -482,8 +476,16 @@ _G.set_colorscheme_and_highlight = function(colorscheme)
   -- Set colorscheme
   vim.cmd('colorscheme ' .. colorscheme)
 
-  -- Set line number color to white
-  vim.cmd('hi LineNr guifg=#00FF00')
+  -- Set LineNr color based on colorscheme for high contrast
+  if colorscheme == 'kanagawa' then
+    vim.cmd('hi LineNr guifg=#FFFF00') -- Soft off-white from Kanagawa for high contrast against dark background
+  elseif colorscheme == 'rose-pine' then
+    vim.cmd('hi LineNr guifg=#FFFF00') -- Subtle lavender from Rose Pine for contrast and harmony
+  elseif colorscheme == 'everforest' then
+    vim.cmd('hi LineNr guifg=#00FF00') -- Warm off-white from Everforest for clear visibility
+  else
+    vim.cmd('hi LineNr guifg=#FFFFFF') -- Fallback to white
+  end
 
   -- Reapply hop.nvim highlight settings after colorscheme change
   vim.cmd('hi HopNextKey guifg=#FFFFFF')
@@ -690,12 +692,6 @@ vim.api.nvim_set_keymap('n', '<C-p>', ':Gitsigns prev_hunk<CR>', { noremap = tru
 -- tar -xzf nvim-linux-x86_64.tar.gz
 -- sudo mv nvim-linux-x86_64 /usr/local/nvim
 -- sudo ln -s /usr/local/nvim/bin/nvim /usr/local/bin/nvim
-
--- NEW: Additional notes for LaTeX setup
--- 3. Ensure TeX Live is installed for LaTeX compilation
--- 4. Install Zathura and zathura-pdf-poppler for PDF viewing
--- 5. Install chktex for LaTeX linting
--- 6. On Windows, consider using WSL for Zathura compatibility
 
 -- installed lsp 
 --  Installed
