@@ -411,7 +411,7 @@ vim.api.nvim_set_keymap('n', 'q', '<Nop>', { noremap = true, silent = true })
 
 -- Move to end or beginning of line
 vim.api.nvim_set_keymap('n', '-', '<S-$>', { noremap = true })
-vim.api.nvim_set_keymap('v', '-', '<S-$>', { noremap = true })
+vim.api.nvim_set_keymap('v', '-', '<S-$>h', { noremap = true })
 
 -- Open new view
 vim.api.nvim_set_keymap('n', '<C-A-x>', ':new<CR>', { noremap = true, silent = true })
