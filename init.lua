@@ -1,4 +1,4 @@
--- C:\Users\Administrator\AppData\Local\nvim
+-- NvimTreeOpen C:\Users\Administrator\AppData\Local\nvim
 -- ~/.config/nvim/
 -- Enable Vim loader for improved performance
 vim.loader.enable()
@@ -363,6 +363,7 @@ vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true }) -- Exit
 vim.api.nvim_set_keymap('v', '<C-c>', '"+y', { noremap = true })
 vim.api.nvim_set_keymap('v', '<C-x>', '"+d', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-a>', 'gg0v<S-$>Gh', { noremap = true })
+vim.api.nvim_set_keymap('i', '<C-a>', '<Esc>gg0v<S-$>Gh', { noremap = true })
 vim.api.nvim_set_keymap('i', '<C-v>', '<Esc>"+p', { noremap = true })
 vim.api.nvim_set_keymap('t', '<C-v>', '<C-\\><C-n>"+pa', { noremap = true })
 
