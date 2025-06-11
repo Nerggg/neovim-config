@@ -332,9 +332,28 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- LSP STUFFS END
 
 -- LaTex Stuffs
-vim.g.vimtex_view_method = 'zathura' -- Mengatur zathura sebagai PDF viewer
-vim.g.vimtex_quickfix_mode = 0 -- Nonaktifkan quickfix otomatis
-vim.g.tex_flavor = 'latex' -- Tentukan flavor LaTeX
+vim.g.tex_flavor = 'latex'
+vim.g.vimtex_view_method = 'zathura'
+vim.g.vimtex_quickfix_mode = 2
+vim.g.vimtex_compiler_method = 'latexmk'
+vim.g.vimtex_compiler_latexmk = {
+  options = {
+    '-pdf',
+    '-shell-escape',
+    '-verbose',
+    '-file-line-error',
+    '-synctex=1',
+    '-interaction=nonstopmode',
+  },
+}
+vim.g.vimtex_complete_enabled = 1
+vim.g.vimtex_complete_close_braces = 1
+
+vim.keymap.set('n', '<leader>lc', ':VimtexCompile<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>lv', ':VimtexView<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>lt', ':VimtexTocToggle<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>lx', ':VimtexClean<CR>', { noremap = true, silent = true })
+-- LaTex Stuffs End
 
 -- Basic Neovim Settings
 vim.o.number = true -- Show line numbers
@@ -354,7 +373,6 @@ vim.o.laststatus = 2 -- Always show status line
 vim.o.shiftwidth = 4 -- Indentation width
 vim.g.mapleader = " " -- Set leader key to space
 vim.cmd('colorscheme kanagawa') -- Set default colorscheme
-vim.cmd('redraw!')
 vim.cmd('hi LineNr guifg=#FFFF00')
 
 -- Hopper Highlight settings for hop.nvim
@@ -426,6 +444,8 @@ end
 vim.api.nvim_create_autocmd('BufEnter', {
   callback = function()
     if is_terminal_tab() then
+      vim.o.number = true -- Show line numbers
+      vim.o.relativenumber = true -- Show relative line numbers
       close_nvim_tree()
     end
   end,

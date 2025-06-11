@@ -346,7 +346,6 @@ vim.o.laststatus = 2 -- Always show status line
 vim.o.shiftwidth = 4 -- Indentation width
 vim.g.mapleader = " " -- Set leader key to space
 vim.cmd('colorscheme kanagawa') -- Set default colorscheme
-vim.cmd('redraw!')
 vim.cmd('hi LineNr guifg=#FFFF00')
 
 -- Hopper Highlight settings for hop.nvim
@@ -418,6 +417,8 @@ end
 vim.api.nvim_create_autocmd('BufEnter', {
   callback = function()
     if is_terminal_tab() then
+      vim.o.number = true -- Show line numbers
+      vim.o.relativenumber = true -- Show relative line numbers
       close_nvim_tree()
     end
   end,
