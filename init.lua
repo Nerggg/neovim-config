@@ -375,6 +375,7 @@ vim.api.nvim_set_keymap('i', '<A-a>', '<End>', { noremap = true, silent = true }
 vim.api.nvim_set_keymap('i', '<A-s>', '<Esc>viw', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<A-s>', 'viw', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-BS>', '<C-w>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-w>', '<Esc>wa', { noremap = true, silent = true })
 
 -- Quick tabbing
 vim.keymap.set('v', '<Tab>', '>gv', { noremap = true })
