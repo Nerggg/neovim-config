@@ -401,6 +401,8 @@ vim.api.nvim_set_keymap('i', '<A-l>', '<Right>', { noremap = true, silent = true
 vim.api.nvim_set_keymap('i', '<A-a>', '<End>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-s>', '<Esc>viw', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<A-s>', 'viw', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-BS>', '<C-w>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-w>', '<Esc>wa', { noremap = true, silent = true })
 
 -- Quick tabbing
 vim.keymap.set('v', '<Tab>', '>gv', { noremap = true })
@@ -465,6 +467,7 @@ end
 -- Navigation and plugin keymaps
 vim.api.nvim_set_keymap('n', '<F1>', ':HopWord<CR>', { noremap = true }) -- Hop to word in normal mode
 vim.api.nvim_set_keymap('i', '<F1>', '<Esc>:HopWord<CR>', { noremap = true }) -- Hop to word in insert mode
+vim.api.nvim_set_keymap('v', '<F1>', '<Esc>:HopWord<CR>', { noremap = true }) -- Hop to word in insert mode
 vim.api.nvim_set_keymap('n', '<F2>', ':nohlsearch<CR>', { noremap = true }) -- Clear search highlights
 -- Keymap to toggle nvim-tree conditionally
 vim.api.nvim_set_keymap('n', '<F3>', ':lua _G.open_nvim_tree_conditional()<CR>', { noremap = true, silent = true })
