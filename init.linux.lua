@@ -407,6 +407,8 @@ vim.api.nvim_set_keymap('i', '<A-w>', '<Esc>wa', { noremap = true, silent = true
 -- Quick tabbing
 vim.keymap.set('v', '<Tab>', '>gv', { noremap = true })
 vim.keymap.set('v', '<S-Tab>', '<gv', { noremap = true })
+vim.keymap.set('n', '<Tab>', 'v>', { noremap = true })
+vim.keymap.set('n', '<S-Tab>', 'v<', { noremap = true })
 
 -- Disable recording
 vim.api.nvim_set_keymap('n', 'q', '<Nop>', { noremap = true, silent = true })
