@@ -364,6 +364,7 @@ vim.api.nvim_set_keymap('v', '<C-x>', '"+d', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-a>', 'gg0v<S-$>Gh', { noremap = true })
 vim.api.nvim_set_keymap('i', '<C-a>', '<Esc>gg0v<S-$>Gh', { noremap = true })
 vim.api.nvim_set_keymap('i', '<C-v>', '<Esc>"+p', { noremap = true })
+vim.api.nvim_set_keymap('v', '<C-v>', '<Esc>"+p', { noremap = true })
 vim.api.nvim_set_keymap('t', '<C-v>', '<C-\\><C-n>"+pa', { noremap = true })
 
 -- Navigate with hjkl in insert mode
