@@ -53,8 +53,9 @@ vim.cmd('Plug \'nvim-lua/plenary.nvim\'') -- Telescope dependency
 vim.cmd('Plug \'nvim-telescope/telescope.nvim\'') -- Fuzzy finder
 vim.cmd('Plug \'nvim-telescope/telescope-file-browser.nvim\'') -- File browser extension
 
--- LaTex Stuffs
+-- LaTex Stuffs Start
 vim.cmd('Plug \'lervag/vimtex\'')
+-- LaTex Stuffs End
 
 -- Finalize Vim-Plug
 vim.cmd('call plug#end()')
@@ -331,7 +332,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 -- LSP STUFFS END
 
--- LaTex Stuffs
+-- LaTex Stuffs Start
 vim.g.tex_flavor = 'latex'
 vim.g.vimtex_view_method = 'zathura'
 vim.g.vimtex_quickfix_mode = 2
@@ -391,6 +392,7 @@ vim.api.nvim_set_keymap('v', '<C-x>', '"+d', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-a>', 'gg0v<S-$>Gh', { noremap = true })
 vim.api.nvim_set_keymap('i', '<C-a>', '<Esc>gg0v<S-$>Gh', { noremap = true })
 vim.api.nvim_set_keymap('i', '<C-v>', '<Esc>"+p', { noremap = true })
+vim.api.nvim_set_keymap('v', '<C-v>', 'c<Esc>"+p', { noremap = true })
 vim.api.nvim_set_keymap('t', '<C-v>', '<C-\\><C-n>"+pa', { noremap = true })
 
 -- Navigate with hjkl in insert mode
@@ -424,6 +426,7 @@ vim.api.nvim_set_keymap('n', '<C-A-v>', ':botright vnew<CR>', { noremap = true, 
 -- Save file and exit shortcut
 vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<C-s>', '<Esc>:w<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<C-s>', '<Esc>:w<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-A-q>', ':lua _G.close_window_and_buffer()<CR>', { noremap = true, silent = true })
 
 -- Function to check if current buffer is a terminal
