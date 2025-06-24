@@ -509,6 +509,7 @@ vim.api.nvim_set_keymap('n', '<leader>3',
 
 -- Tab Navigation
 vim.api.nvim_set_keymap('n', '<C-t>', ':tabnew<CR>', { noremap = true, silent = true }) -- Create new tab
+vim.api.nvim_set_keymap('i', '<C-t>', '<Esc>:tabnew<CR>', { noremap = true, silent = true }) -- Create new tab
 vim.api.nvim_set_keymap('n', '<A-Left>', ':tabprevious<CR>', { noremap = true, silent = true }) -- Previous tab
 vim.api.nvim_set_keymap('n', '<A-Right>', ':tabnext<CR>', { noremap = true, silent = true }) -- Next tab
 
