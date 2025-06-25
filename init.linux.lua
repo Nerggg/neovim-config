@@ -394,6 +394,7 @@ vim.api.nvim_set_keymap('i', '<C-a>', '<Esc>gg0v<S-$>Gh', { noremap = true })
 vim.api.nvim_set_keymap('i', '<C-v>', '<Esc>"+p', { noremap = true })
 vim.api.nvim_set_keymap('v', '<C-v>', 'c<Esc>"+p', { noremap = true })
 vim.api.nvim_set_keymap('t', '<C-v>', '<C-\\><C-n>"+pa', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-v>', '0v<A-$>h', { noremap = true })
 
 -- Navigate with hjkl in insert mode
 vim.api.nvim_set_keymap('i', '<A-h>', '<Left>', { noremap = true, silent = true })
@@ -409,8 +410,6 @@ vim.api.nvim_set_keymap('i', '<A-w>', '<Esc>wa', { noremap = true, silent = true
 -- Quick tabbing
 vim.keymap.set('v', '<Tab>', '>gv', { noremap = true })
 vim.keymap.set('v', '<S-Tab>', '<gv', { noremap = true })
-vim.keymap.set('n', '<Tab>', 'v>', { noremap = true })
-vim.keymap.set('n', '<S-Tab>', 'v<', { noremap = true })
 
 -- Disable recording
 vim.api.nvim_set_keymap('n', 'q', '<Nop>', { noremap = true, silent = true })
@@ -536,6 +535,8 @@ vim.api.nvim_set_keymap('n', '<leader>3',
 
 -- Tab Navigation
 vim.api.nvim_set_keymap('n', '<C-t>', ':tabnew<CR>', { noremap = true, silent = true }) -- Create new tab
+vim.api.nvim_set_keymap('i', '<C-t>', '<Esc>:tabnew<CR>', { noremap = true, silent = true }) -- Create new tab
+vim.api.nvim_set_keymap('i', '<C-d>', '', { noremap = true, silent = true }) -- Create new tab
 vim.api.nvim_set_keymap('n', '<A-Left>', ':tabprevious<CR>', { noremap = true, silent = true }) -- Previous tab
 vim.api.nvim_set_keymap('n', '<A-Right>', ':tabnext<CR>', { noremap = true, silent = true }) -- Next tab
 
