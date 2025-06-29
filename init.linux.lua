@@ -9,6 +9,7 @@ vim.g.loaded_netrwPlugin = 1
 
 -- Enable true color support in terminal
 vim.opt.termguicolors = true
+vim.opt.cursorline = true
 
 -- Initialize Vim-Plug plugin manager
 vim.cmd('call plug#begin()')
@@ -53,9 +54,9 @@ vim.cmd('Plug \'nvim-lua/plenary.nvim\'') -- Telescope dependency
 vim.cmd('Plug \'nvim-telescope/telescope.nvim\'') -- Fuzzy finder
 vim.cmd('Plug \'nvim-telescope/telescope-file-browser.nvim\'') -- File browser extension
 
--- LaTex Stuffs Start
+-- LATEXX Stuffs Start
 vim.cmd('Plug \'lervag/vimtex\'')
--- LaTex Stuffs End
+-- LATEXX Stuffs End
 
 -- Finalize Vim-Plug
 vim.cmd('call plug#end()')
@@ -119,6 +120,7 @@ require('telescope').setup {
       "target",
       "build",
       "dist",
+      "bin",
     },
   },
   pickers = {
@@ -307,23 +309,36 @@ vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
     local function GoToDefinitionInNewTab()
-      vim.lsp.buf.definition()
-      vim.cmd('tabnew')
+      -- Simpan posisi current window
+      local current_win = vim.api.nvim_get_current_win()
+      local current_buf = vim.api.nvim_get_current_buf()
+      
+      -- Go to definition terlebih dahulu
+      vim.lsp.buf.definition({
+        on_list = function(options)
+          if options and options.items and #options.items > 0 then
+            local item = options.items[1]
+            -- Buat tab baru
+            vim.cmd('tabnew')
+            -- Buka file di tab baru
+            vim.cmd('edit ' .. item.filename)
+            -- Jump ke posisi yang tepat
+            vim.api.nvim_win_set_cursor(0, {item.lnum, item.col - 1})
+          end
+        end
+      })
     end
-
+    
     local opts = { buffer = ev.buf, noremap = true, silent = true }
-
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'gf', GoToDefinitionInNewTab, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-
     -- Rename, format, code actions
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts)
-
     -- Diagnostics
     vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
     vim.keymap.set('n', '[[', vim.diagnostic.goto_prev, opts)
@@ -332,7 +347,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 -- LSP STUFFS END
 
--- LaTex Stuffs Start
+-- LATEXX Stuffs Start
 vim.g.tex_flavor = 'latex'
 vim.g.vimtex_view_method = 'zathura'
 vim.g.vimtex_quickfix_mode = 2
@@ -354,7 +369,7 @@ vim.keymap.set('n', '<leader>lc', ':VimtexCompile<CR>', { noremap = true, silent
 vim.keymap.set('n', '<leader>lv', ':VimtexView<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>lt', ':VimtexTocToggle<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>lx', ':VimtexClean<CR>', { noremap = true, silent = true })
--- LaTex Stuffs End
+-- LATEXX Stuffs End
 
 -- Basic Neovim Settings
 vim.o.number = true -- Show line numbers
@@ -394,6 +409,9 @@ vim.api.nvim_set_keymap('i', '<C-a>', '<Esc>gg0v<S-$>Gh', { noremap = true })
 vim.api.nvim_set_keymap('i', '<C-v>', '<Esc>"+p', { noremap = true })
 vim.api.nvim_set_keymap('v', '<C-v>', 'c<Esc>"+p', { noremap = true })
 vim.api.nvim_set_keymap('t', '<C-v>', '<C-\\><C-n>"+pa', { noremap = true })
+vim.api.nvim_set_keymap('i', '<C-b>', '<Esc>p', { noremap = true })
+vim.api.nvim_set_keymap('v', '<C-b>', 'c<Esc>p', { noremap = true })
+vim.api.nvim_set_keymap('t', '<C-b>', '<C-\\><C-n>pa', { noremap = true })
 vim.api.nvim_set_keymap('n', '<A-v>', '0v<A-$>h', { noremap = true })
 
 -- Navigate with hjkl in insert mode
@@ -473,6 +491,9 @@ vim.api.nvim_set_keymap('n', '<F1>', ':HopWord<CR>', { noremap = true }) -- Hop 
 vim.api.nvim_set_keymap('i', '<F1>', '<Esc>:HopWord<CR>', { noremap = true }) -- Hop to word in insert mode
 vim.api.nvim_set_keymap('v', '<F1>', '<Esc>:HopWord<CR>', { noremap = true }) -- Hop to word in insert mode
 vim.api.nvim_set_keymap('n', '<F2>', ':nohlsearch<CR>', { noremap = true }) -- Clear search highlights
+vim.api.nvim_set_keymap('i', '<F2>', '<Esc>:nohlsearch<CR>', { noremap = true }) -- Clear search highlights
+vim.api.nvim_set_keymap('v', '<F2>', '<Esc>:nohlsearch<CR>', { noremap = true }) -- Clear search highlights
+vim.api.nvim_set_keymap('t', '<F2>', '<C-\\><C-n>:nohlsearch<CR>', { noremap = true }) -- Clear search highlights
 -- Keymap to toggle nvim-tree conditionally
 vim.api.nvim_set_keymap('n', '<F3>', ':lua _G.open_nvim_tree_conditional()<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<F3>', ':NvimTreeOpen<CR>', { noremap = true }) -- Open nvim-tree
