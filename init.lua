@@ -116,6 +116,7 @@ require('telescope').setup {
       "target",
       "build",
       "dist",
+      "bin",
     },
   },
   pickers = {
@@ -304,23 +305,36 @@ vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
     local function GoToDefinitionInNewTab()
-      vim.lsp.buf.definition()
-      vim.cmd('tabnew')
+      -- Simpan posisi current window
+      local current_win = vim.api.nvim_get_current_win()
+      local current_buf = vim.api.nvim_get_current_buf()
+      
+      -- Go to definition terlebih dahulu
+      vim.lsp.buf.definition({
+        on_list = function(options)
+          if options and options.items and #options.items > 0 then
+            local item = options.items[1]
+            -- Buat tab baru
+            vim.cmd('tabnew')
+            -- Buka file di tab baru
+            vim.cmd('edit ' .. item.filename)
+            -- Jump ke posisi yang tepat
+            vim.api.nvim_win_set_cursor(0, {item.lnum, item.col - 1})
+          end
+        end
+      })
     end
-
+    
     local opts = { buffer = ev.buf, noremap = true, silent = true }
-
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'gf', GoToDefinitionInNewTab, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-
     -- Rename, format, code actions
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts)
-
     -- Diagnostics
     vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
     vim.keymap.set('n', '[[', vim.diagnostic.goto_prev, opts)
