@@ -154,6 +154,51 @@ require('mason-lspconfig').setup({
   automatic_installation = true,
 })
 
+-- Konfigurasi JDTLS yang benar
+require('lspconfig').jdtls.setup {
+  -- Gunakan path lengkap ke java.exe, bukan ke folder bin
+  cmd = { 
+    'jdtls', 
+    '--java-executable', 
+    'C:/Program Files/Java/jdk-21.0.7/bin/java.exe'  -- Tambahkan java.exe
+  },
+  
+  -- Atau bisa juga menggunakan environment variable
+  -- cmd = { 'jdtls' },  -- Jika JAVA_HOME sudah di-set ke Java 21
+  
+  settings = {
+    java = {
+      -- Konfigurasi untuk compile compliance (project Java 17)
+      compile = {
+        nullAnalysis = {
+          mode = "automatic"
+        }
+      },
+      configuration = {
+        -- Set target compatibility ke Java 17
+        runtimes = {
+          {
+            name = "JavaSE-17",
+            path = "C:/Program Files/Java/jdk-17.0.12",
+          },
+          {
+            name = "JavaSE-21", 
+            path = "C:/Program Files/Java/jdk-21.0.7",
+          }
+        }
+      },
+      project = {
+        -- Jangan set referencedLibraries ke JDK lib secara manual
+        -- Biarkan JDTLS mendeteksi otomatis dari classpath project
+        referencedLibraries = {
+          -- Tambahkan external libraries jika diperlukan
+          -- "path/to/external/libs/*.jar"
+        },
+      },
+    },
+  },
+}
+
 -- Configure nvim-lint for linting
 require('lint').linters_by_ft = {
   --python = {'flake8'},
