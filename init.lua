@@ -112,6 +112,7 @@ require('telescope').setup {
     },
     file_ignore_patterns = {
       "node_modules",
+      ".gradle",
       ".git",
       "target",
       "build",
@@ -155,49 +156,49 @@ require('mason-lspconfig').setup({
 })
 
 -- Konfigurasi JDTLS yang benar
-require('lspconfig').jdtls.setup {
-  -- Gunakan path lengkap ke java.exe, bukan ke folder bin
-  cmd = { 
-    'jdtls', 
-    '--java-executable', 
-    'C:/Program Files/Java/jdk-21.0.7/bin/java.exe'  -- Tambahkan java.exe
-  },
-  
-  -- Atau bisa juga menggunakan environment variable
-  -- cmd = { 'jdtls' },  -- Jika JAVA_HOME sudah di-set ke Java 21
-  
-  settings = {
-    java = {
-      -- Konfigurasi untuk compile compliance (project Java 17)
-      compile = {
-        nullAnalysis = {
-          mode = "automatic"
-        }
-      },
-      configuration = {
-        -- Set target compatibility ke Java 17
-        runtimes = {
-          {
-            name = "JavaSE-17",
-            path = "C:/Program Files/Java/jdk-17.0.12",
-          },
-          {
-            name = "JavaSE-21", 
-            path = "C:/Program Files/Java/jdk-21.0.7",
-          }
-        }
-      },
-      project = {
-        -- Jangan set referencedLibraries ke JDK lib secara manual
-        -- Biarkan JDTLS mendeteksi otomatis dari classpath project
-        referencedLibraries = {
-          -- Tambahkan external libraries jika diperlukan
-          -- "path/to/external/libs/*.jar"
-        },
-      },
-    },
-  },
-}
+-- require('lspconfig').jdtls.setup {
+--   -- Gunakan path lengkap ke java.exe, bukan ke folder bin
+--   cmd = { 
+--     'jdtls', 
+--     '--java-executable', 
+--     'C:/Program Files/Java/jdk-21.0.7/bin/java.exe'  -- Tambahkan java.exe
+--   },
+--   
+--   -- Atau bisa juga menggunakan environment variable
+--   -- cmd = { 'jdtls' },  -- Jika JAVA_HOME sudah di-set ke Java 21
+--   
+--   settings = {
+--     java = {
+--       -- Konfigurasi untuk compile compliance (project Java 17)
+--       compile = {
+--         nullAnalysis = {
+--           mode = "automatic"
+--         }
+--       },
+--       configuration = {
+--         -- Set target compatibility ke Java 17
+--         runtimes = {
+--           {
+--             name = "JavaSE-17",
+--             path = "C:/Program Files/Java/jdk-17.0.12",
+--           },
+--           {
+--             name = "JavaSE-21", 
+--             path = "C:/Program Files/Java/jdk-21.0.7",
+--           }
+--         }
+--       },
+--       project = {
+--         -- Jangan set referencedLibraries ke JDK lib secara manual
+--         -- Biarkan JDTLS mendeteksi otomatis dari classpath project
+--         referencedLibraries = {
+--           -- Tambahkan external libraries jika diperlukan
+--           -- "path/to/external/libs/*.jar"
+--         },
+--       },
+--     },
+--   },
+-- }
 
 -- Configure nvim-lint for linting
 require('lint').linters_by_ft = {
@@ -417,6 +418,10 @@ vim.cmd('hi HopNextKey2 guifg=#00FF00')
 -- Basic commands
 vim.api.nvim_set_keymap('n', ':W', ':w', { noremap = true }) -- Save file
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true }) -- Exit terminal mode
+
+-- Move quickly
+vim.api.nvim_set_keymap('n', ',', '5l', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'm', '5h', { noremap = true, silent = true })
 
 -- Copy pasting helper
 vim.api.nvim_set_keymap('v', '<C-c>', '"+y', { noremap = true })
