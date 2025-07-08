@@ -116,6 +116,7 @@ require('telescope').setup {
     },
     file_ignore_patterns = {
       "node_modules",
+      ".gradle",
       ".git",
       "target",
       "build",
@@ -400,6 +401,10 @@ vim.cmd('hi HopNextKey2 guifg=#00FF00')
 -- Basic commands
 vim.api.nvim_set_keymap('n', ':W', ':w', { noremap = true }) -- Save file
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true }) -- Exit terminal mode
+
+-- Move quickly
+vim.api.nvim_set_keymap('n', ',', '5l', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'm', '5h', { noremap = true, silent = true })
 
 -- Copy pasting helper
 vim.api.nvim_set_keymap('v', '<C-c>', '"+y', { noremap = true })
