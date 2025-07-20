@@ -1,5 +1,7 @@
 -- NvimTreeOpen C:\Users\Administrator\AppData\Local\nvim
 -- ~/.config/nvim/
+-- search for two words = \v(word1|word2)
+
 -- Enable Vim loader for improved performance
 vim.loader.enable()
 
@@ -406,7 +408,7 @@ vim.o.linebreak = true -- Wrap lines at convenient points
 vim.o.laststatus = 2 -- Always show status line
 vim.o.shiftwidth = 4 -- Indentation width
 vim.g.mapleader = " " -- Set leader key to space
-vim.cmd('colorscheme kanagawa') -- Set default colorscheme
+vim.cmd('colorscheme rose-pine') -- Set default colorscheme
 vim.cmd('hi LineNr guifg=#FFFF00')
 
 -- Hopper Highlight settings for hop.nvim
