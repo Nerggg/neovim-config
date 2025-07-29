@@ -444,6 +444,7 @@ vim.api.nvim_set_keymap('i', '<A-j>', '<Down>', { noremap = true, silent = true 
 vim.api.nvim_set_keymap('i', '<A-k>', '<Up>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-l>', '<Right>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-a>', '<End>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-i>', '<Home>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-s>', '<Esc>viw', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<A-s>', 'viw', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-BS>', '<C-w>', { noremap = true, silent = true })
