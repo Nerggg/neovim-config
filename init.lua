@@ -534,6 +534,7 @@ vim.api.nvim_set_keymap('n', '<C-h>', '<C-W>h', { noremap = true }) -- Move to l
 vim.api.nvim_set_keymap('n', '<C-l>', '<C-W>l', { noremap = true }) -- Move to right window
 vim.api.nvim_set_keymap('n', '<C-k>', '<C-W>k', { noremap = true }) -- Move to upper window
 vim.api.nvim_set_keymap('n', '<C-j>', '<C-W>j', { noremap = true }) -- Move to lower window
+vim.api.nvim_set_keymap('n', ':NTO', ':NvimTreeOpen', { noremap = true, silent = true })
 
 -- Toggleterm keymaps
 vim.api.nvim_set_keymap('n', '<A-1>', ':ToggleTerm 1<CR>', { noremap = true }) -- Open terminal 1
