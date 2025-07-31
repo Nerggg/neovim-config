@@ -526,7 +526,8 @@ vim.api.nvim_set_keymap('n', '<F4>', ':Mason<CR>', { noremap = true }) -- Open M
 vim.api.nvim_set_keymap('n', '<F5>', ':GuessIndent<CR>', { noremap = true }) -- Run guess-indent
 vim.api.nvim_set_keymap('n', '<F6>', ':lua require("lint").try_lint()<CR>', { noremap = true }) -- Run linter
 vim.api.nvim_set_keymap('n', '<F7>', ':Gitsigns toggle_signs<CR>', { noremap = true, silent = true }) -- Toggle git signs
-vim.api.nvim_set_keymap('n', '<F8>', ':Gitsigns toggle_current_line_blame<CR>', { noremap = true, silent = true }) -- Toggle git blame
+-- vim.api.nvim_set_keymap('n', '<F8>', ':Gitsigns toggle_current_line_blame<CR>', { noremap = true, silent = true }) -- Toggle git blame
+vim.api.nvim_set_keymap('n', '<F8>', ':Gitsigns blame<CR>', { noremap = true, silent = true }) -- Toggle git blame
 vim.api.nvim_set_keymap('n', '<F11>', ':source $MYVIMRC<CR>', { noremap = true }) -- Reload config
 vim.api.nvim_set_keymap('n', '<F12>', ':e $MYVIMRC<CR>', { noremap = true }) -- Edit config
 
