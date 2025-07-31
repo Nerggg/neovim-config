@@ -1,6 +1,7 @@
 -- NvimTreeOpen C:\Users\Administrator\AppData\Local\nvim
 -- ~/.config/nvim/
 -- search for two words = \v(word1|word2)
+-- right click, new shortcut, then "C:\path to wezterm\wezterm-gui.exe" start -- "C:\path to neovim\nvim.exe"
 
 -- Enable Vim loader for improved performance
 vim.loader.enable()
