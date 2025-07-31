@@ -3,6 +3,12 @@
 -- search for two words = \v(word1|word2)
 -- right click, new shortcut, then "C:\path to wezterm\wezterm-gui.exe" start -- "C:\path to neovim\nvim.exe"
 
+-- then put this config in C:\Users\Administrator\.wezterm.lua
+-- local wezterm = require 'wezterm'
+-- local config = {}
+-- config.font_size = 9.0
+-- return config
+
 -- Enable Vim loader for improved performance
 vim.loader.enable()
 
