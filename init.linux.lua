@@ -427,6 +427,7 @@ vim.api.nvim_set_keymap('i', '<A-j>', '<Down>', { noremap = true, silent = true 
 vim.api.nvim_set_keymap('i', '<A-k>', '<Up>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-l>', '<Right>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-a>', '<End>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-i>', '<Home>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-s>', '<Esc>viw', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<A-s>', 'viw', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-BS>', '<C-w>', { noremap = true, silent = true })
@@ -508,7 +509,8 @@ vim.api.nvim_set_keymap('n', '<F4>', ':Mason<CR>', { noremap = true }) -- Open M
 vim.api.nvim_set_keymap('n', '<F5>', ':GuessIndent<CR>', { noremap = true }) -- Run guess-indent
 vim.api.nvim_set_keymap('n', '<F6>', ':lua require("lint").try_lint()<CR>', { noremap = true }) -- Run linter
 vim.api.nvim_set_keymap('n', '<F7>', ':Gitsigns toggle_signs<CR>', { noremap = true, silent = true }) -- Toggle git signs
-vim.api.nvim_set_keymap('n', '<F8>', ':Gitsigns toggle_current_line_blame<CR>', { noremap = true, silent = true }) -- Toggle git blame
+-- vim.api.nvim_set_keymap('n', '<F8>', ':Gitsigns toggle_current_line_blame<CR>', { noremap = true, silent = true }) -- Toggle git blame
+vim.api.nvim_set_keymap('n', '<F8>', ':Gitsigns blame<CR>', { noremap = true, silent = true }) -- Toggle git blame
 vim.api.nvim_set_keymap('n', '<F11>', ':source $MYVIMRC<CR>', { noremap = true }) -- Reload config
 vim.api.nvim_set_keymap('n', '<F12>', ':e $MYVIMRC<CR>', { noremap = true }) -- Edit config
 
@@ -517,6 +519,7 @@ vim.api.nvim_set_keymap('n', '<C-h>', '<C-W>h', { noremap = true }) -- Move to l
 vim.api.nvim_set_keymap('n', '<C-l>', '<C-W>l', { noremap = true }) -- Move to right window
 vim.api.nvim_set_keymap('n', '<C-k>', '<C-W>k', { noremap = true }) -- Move to upper window
 vim.api.nvim_set_keymap('n', '<C-j>', '<C-W>j', { noremap = true }) -- Move to lower window
+vim.api.nvim_set_keymap('n', ':NTO', ':NvimTreeOpen', { noremap = true, silent = true })
 
 -- Toggleterm keymaps
 vim.api.nvim_set_keymap('n', '<A-1>', ':ToggleTerm 1<CR>', { noremap = true }) -- Open terminal 1
