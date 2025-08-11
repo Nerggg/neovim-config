@@ -464,6 +464,9 @@ vim.api.nvim_set_keymap('i', '<A-w>', '<Esc>wa', { noremap = true, silent = true
 vim.keymap.set('v', '<Tab>', '>gv', { noremap = true })
 vim.keymap.set('v', '<S-Tab>', '<gv', { noremap = true })
 
+-- HTML Tag Fold
+vim.api.nvim_set_keymap('n', 'zo', 'zfat', { noremap = true, silent = true })
+
 -- Disable recording
 vim.api.nvim_set_keymap('n', 'q', '<Nop>', { noremap = true, silent = true })
 
