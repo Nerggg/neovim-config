@@ -466,6 +466,7 @@ vim.keymap.set('v', '<S-Tab>', '<gv', { noremap = true })
 
 -- HTML Tag Fold
 vim.api.nvim_set_keymap('n', 'zo', 'zfat', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>cm', '0wi<!--<Esc>$a--><Esc>', { noremap = true, silent = true, desc = 'Wrap line with HTML comment tags' })
 
 -- Disable recording
 vim.api.nvim_set_keymap('n', 'q', '<Nop>', { noremap = true, silent = true })
