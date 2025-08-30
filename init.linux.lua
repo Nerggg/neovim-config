@@ -264,58 +264,21 @@ cmp.setup({
 -- Setup LSP capabilities for autocompletion
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Setup LSP servers with mason-lspconfig
--- require('mason-lspconfig').setup_handlers({
---   function(server_name)
---     lspconfig[server_name].setup({
---       capabilities = capabilities,
---     })
---   end,
+lspconfig.pyright.setup({
+  capabilities = capabilities,
+})
 
---   -- Custom configuration for lua_ls
---   ["lua_ls"] = function()
---     lspconfig.lua_ls.setup({
---       capabilities = capabilities,
---       settings = {
---         Lua = {
---           diagnostics = {
---             globals = { 'vim' }
---           }
---         }
---       }
---     })
---   end,
+lspconfig.clangd.setup({
+  capabilities = capabilities,
+})
 
---   -- Custom configuration for clangd
---   ["clangd"] = function()
---     lspconfig.clangd.setup({
---       capabilities = capabilities,
---       cmd = {
---         "clangd",
---         "--background-index",
---         "--clang-tidy",
---         "--header-insertion=iwyu",
---         "--completion-style=detailed",
---         "--function-arg-placeholders",
---         "--fallback-style=llvm"
---       },
---       init_options = {
---         usePlaceholders = true,
---         completeUnimported = true,
---         clangdFileStatus = true
---       },
---       filetypes = { "c", "cpp", "objc", "objcpp", "h", "hpp" },
---       root_dir = function(fname)
---         return require("lspconfig.util").root_pattern(
---           "compile_commands.json",
---           "compile_flags.txt",
---           ".git",
---           "Makefile"
---         )(fname) or vim.fn.getcwd()
---       end,
---     })
---   end,
--- })
+lspconfig.intelephense.setup({
+  capabilities = capabilities,
+})
+
+lspconfig.ts_ls.setup({
+  capabilities = capabilities,
+})
 
 -- LSP keymappings
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -446,6 +409,9 @@ vim.api.nvim_set_keymap('i', '<A-w>', '<Esc>wa', { noremap = true, silent = true
 -- Quick tabbing
 vim.keymap.set('v', '<Tab>', '>gv', { noremap = true })
 vim.keymap.set('v', '<S-Tab>', '<gv', { noremap = true })
+
+-- HTML comment
+vim.keymap.set('n', '<leader>cm', '0wi<!--<Esc>$a--><Esc>', { noremap = true, silent = true, desc = 'Wrap line with HTML comment tags' })
 
 -- Disable recording
 vim.api.nvim_set_keymap('n', 'q', '<Nop>', { noremap = true, silent = true })

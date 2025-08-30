@@ -167,51 +167,6 @@ require('mason-lspconfig').setup({
   automatic_installation = true,
 })
 
--- Konfigurasi JDTLS yang benar
--- require('lspconfig').jdtls.setup {
---   -- Gunakan path lengkap ke java.exe, bukan ke folder bin
---   cmd = { 
---     'jdtls', 
---     '--java-executable', 
---     'C:/Program Files/Java/jdk-21.0.7/bin/java.exe'  -- Tambahkan java.exe
---   },
---   
---   -- Atau bisa juga menggunakan environment variable
---   -- cmd = { 'jdtls' },  -- Jika JAVA_HOME sudah di-set ke Java 21
---   
---   settings = {
---     java = {
---       -- Konfigurasi untuk compile compliance (project Java 17)
---       compile = {
---         nullAnalysis = {
---           mode = "automatic"
---         }
---       },
---       configuration = {
---         -- Set target compatibility ke Java 17
---         runtimes = {
---           {
---             name = "JavaSE-17",
---             path = "C:/Program Files/Java/jdk-17.0.12",
---           },
---           {
---             name = "JavaSE-21", 
---             path = "C:/Program Files/Java/jdk-21.0.7",
---           }
---         }
---       },
---       project = {
---         -- Jangan set referencedLibraries ke JDK lib secara manual
---         -- Biarkan JDTLS mendeteksi otomatis dari classpath project
---         referencedLibraries = {
---           -- Tambahkan external libraries jika diperlukan
---           -- "path/to/external/libs/*.jar"
---         },
---       },
---     },
---   },
--- }
-
 -- Configure nvim-lint for linting
 require('lint').linters_by_ft = {
   --python = {'flake8'},
@@ -305,58 +260,21 @@ cmp.setup({
 -- Setup LSP capabilities for autocompletion
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Setup LSP servers with mason-lspconfig
--- require('mason-lspconfig').setup_handlers({
---   function(server_name)
---     lspconfig[server_name].setup({
---       capabilities = capabilities,
---     })
---   end,
+lspconfig.pyright.setup({
+  capabilities = capabilities,
+})
 
---   -- Custom configuration for lua_ls
---   ["lua_ls"] = function()
---     lspconfig.lua_ls.setup({
---       capabilities = capabilities,
---       settings = {
---         Lua = {
---           diagnostics = {
---             globals = { 'vim' }
---           }
---         }
---       }
---     })
---   end,
+lspconfig.clangd.setup({
+  capabilities = capabilities,
+})
 
---   -- Custom configuration for clangd
---   ["clangd"] = function()
---     lspconfig.clangd.setup({
---       capabilities = capabilities,
---       cmd = {
---         "clangd",
---         "--background-index",
---         "--clang-tidy",
---         "--header-insertion=iwyu",
---         "--completion-style=detailed",
---         "--function-arg-placeholders",
---         "--fallback-style=llvm"
---       },
---       init_options = {
---         usePlaceholders = true,
---         completeUnimported = true,
---         clangdFileStatus = true
---       },
---       filetypes = { "c", "cpp", "objc", "objcpp", "h", "hpp" },
---       root_dir = function(fname)
---         return require("lspconfig.util").root_pattern(
---           "compile_commands.json",
---           "compile_flags.txt",
---           ".git",
---           "Makefile"
---         )(fname) or vim.fn.getcwd()
---       end,
---     })
---   end,
--- })
+lspconfig.intelephense.setup({
+  capabilities = capabilities,
+})
+
+lspconfig.ts_ls.setup({
+  capabilities = capabilities,
+})
 
 -- LSP keymappings
 vim.api.nvim_create_autocmd('LspAttach', {
