@@ -276,8 +276,30 @@ lspconfig.intelephense.setup({
   capabilities = capabilities,
 })
 
+local paths = {
+	config_path = vim.fn.stdpath("config"),
+	data_path = vim.fn.stdpath("data"),
+	pack_path = "/site/pack/core/opt/",
+}
+
 lspconfig.ts_ls.setup({
-  capabilities = capabilities,
+	filetypes = {
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"vue",
+	},
+	init_options = {
+		plugins = {
+			{
+				languages = { "vue" },
+				location = paths.data_path
+					.. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+				name = "@vue/typescript-plugin",
+			},
+		},
+	},
 })
 
 -- LSP keymappings
