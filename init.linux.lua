@@ -746,6 +746,7 @@ vim.api.nvim_set_keymap('n', '<leader>fr', '<cmd>Telescope oldfiles<CR>', { nore
 -- Gitsigns navigation
 vim.api.nvim_set_keymap('n', '<C-n>', ':Gitsigns next_hunk<CR>', { noremap = true, silent = true }) -- Next git hunk
 vim.api.nvim_set_keymap('n', '<C-p>', ':Gitsigns prev_hunk<CR>', { noremap = true, silent = true }) -- Previous git hunk
+vim.api.nvim_set_keymap('n', '<C-o>', ':Gitsigns reset_hunk<CR>', { noremap = true, silent = true }) -- Reset current hunk
 
 -- notes
 -- 1. install xclip di linux kalo gabisa pake clipboard
