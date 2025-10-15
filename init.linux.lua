@@ -225,9 +225,6 @@ vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost" }, {
   end,
 })
 
--- Configure LSP servers
-local lspconfig = require('lspconfig')
-
 -- Configure nvim-cmp for autocompletion
 local cmp = require('cmp')
 
@@ -263,6 +260,9 @@ cmp.setup({
 
 -- Setup LSP capabilities for autocompletion
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+-- Configure LSP servers
+local lspconfig = require('lspconfig')
 
 lspconfig.pyright.setup({
   capabilities = capabilities,
@@ -300,6 +300,26 @@ lspconfig.ts_ls.setup({
 			},
 		},
 	},
+})
+
+lspconfig.dartls.setup({
+  capabilities = capabilities,
+  cmd = { "dart", "language-server", "--protocol=lsp" },
+  filetypes = { "dart" },
+  root_markers = { "pubspec.yaml" },
+  init_options = {
+    onlyAnalyzeProjectsWithOpenFiles = true,
+    suggestFromUnimportedLibraries = true,
+    closingLabels = true,
+    outline = true,
+    flutterOutline = true,
+  },
+  settings = {
+    dart = {
+      completeFunctionCalls = true,
+      showTodos = true,
+    },
+  },
 })
 
 -- LSP keymappings
