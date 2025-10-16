@@ -66,9 +66,8 @@ vim.cmd('Plug \'nvim-lua/plenary.nvim\'') -- Telescope dependency
 vim.cmd('Plug \'nvim-telescope/telescope.nvim\'') -- Fuzzy finder
 vim.cmd('Plug \'nvim-telescope/telescope-file-browser.nvim\'') -- File browser extension
 
--- LATEXX Stuffs Start
-vim.cmd('Plug \'lervag/vimtex\'')
--- LATEXX Stuffs End
+-- Markdown
+vim.cmd('Plug \'OXY2DEV/markview.nvim\'')
 
 -- Finalize Vim-Plug
 vim.cmd('call plug#end()')
@@ -364,30 +363,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 -- LSP STUFFS END
-
--- LATEXX Stuffs Start
-vim.g.tex_flavor = 'latex'
-vim.g.vimtex_view_method = 'zathura'
-vim.g.vimtex_quickfix_mode = 2
-vim.g.vimtex_compiler_method = 'latexmk'
-vim.g.vimtex_compiler_latexmk = {
-  options = {
-    '-pdf',
-    '-shell-escape',
-    '-verbose',
-    '-file-line-error',
-    '-synctex=1',
-    '-interaction=nonstopmode',
-  },
-}
-vim.g.vimtex_complete_enabled = 1
-vim.g.vimtex_complete_close_braces = 1
-
-vim.keymap.set('n', '<leader>lc', ':VimtexCompile<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>lv', ':VimtexView<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>lt', ':VimtexTocToggle<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>lx', ':VimtexClean<CR>', { noremap = true, silent = true })
--- LATEXX Stuffs End
 
 -- Basic Neovim Settings
 vim.o.number = true -- Show line numbers

@@ -66,6 +66,9 @@ vim.cmd('Plug \'nvim-lua/plenary.nvim\'') -- Telescope dependency
 vim.cmd('Plug \'nvim-telescope/telescope.nvim\'') -- Fuzzy finder
 vim.cmd('Plug \'nvim-telescope/telescope-file-browser.nvim\'') -- File browser extension
 
+-- Markdown
+vim.cmd('Plug \'OXY2DEV/markview.nvim\'')
+
 -- Finalize Vim-Plug
 vim.cmd('call plug#end()')
 
@@ -221,9 +224,6 @@ vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost" }, {
   end,
 })
 
--- Configure LSP servers
-local lspconfig = require('lspconfig')
-
 -- Configure nvim-cmp for autocompletion
 local cmp = require('cmp')
 
@@ -259,6 +259,9 @@ cmp.setup({
 
 -- Setup LSP capabilities for autocompletion
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+-- Configure LSP servers
+local lspconfig = require('lspconfig')
 
 lspconfig.pyright.setup({
   capabilities = capabilities,
