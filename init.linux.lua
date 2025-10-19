@@ -379,7 +379,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
 
 vim.o.linebreak = true -- Wrap lines at convenient points
 vim.o.laststatus = 2 -- Always show status line
-vim.o.shiftwidth = 4 -- Indentation width
+-- vim.o.shiftwidth = 4 -- Indentation width
 vim.g.mapleader = " " -- Set leader key to space
 vim.cmd('colorscheme rose-pine') -- Set default colorscheme
 vim.cmd('hi LineNr guifg=#FFFF00')
