@@ -258,26 +258,28 @@ cmp.setup({
 })
 
 -- Setup LSP capabilities for autocompletion
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
--- Configure LSP servers
-local lspconfig = require('lspconfig')
-
-lspconfig.pyright.setup({
+vim.lsp.config('pyright', {
   capabilities = capabilities,
 })
 
-lspconfig.clangd.setup({
+vim.lsp.config('clangd', {
   capabilities = capabilities,
 })
 
-lspconfig.intelephense.setup({
+vim.lsp.config('intelephense', {
   capabilities = capabilities,
 })
 
-lspconfig.ts_ls.setup({
+vim.lsp.config('ts_ls', {
   capabilities = capabilities,
 })
+
+vim.lsp.enable('pyright')
+vim.lsp.enable('clangd')
+vim.lsp.enable('intelephense')
+vim.lsp.enable('ts_ls')
 
 -- LSP keymappings
 vim.api.nvim_create_autocmd('LspAttach', {
