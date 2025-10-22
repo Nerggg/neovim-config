@@ -33,7 +33,7 @@ vim.cmd('Plug \'sainnhe/everforest\'')
 
 -- Plugin configurations
 -- Movement and navigation
-vim.cmd('Plug \'phaazon/hop.nvim\'') -- Fast navigation within buffer
+vim.cmd('Plug \'ggandor/leap.nvim\'') -- Fast navigation within buffer
 vim.cmd('Plug \'lukas-reineke/indent-blankline.nvim\'') -- Indentation guides
 vim.cmd('Plug \'jiangmiao/auto-pairs\'') -- Automatic bracket pairing
 
@@ -73,8 +73,10 @@ vim.cmd('Plug \'OXY2DEV/markview.nvim\'')
 vim.cmd('call plug#end()')
 
 -- Plugin Setup Configurations
--- Configure hop.nvim for fast navigation
-require 'hop'.setup {}
+require('leap').setup({
+  case_sensitive = false,
+  highlight_unlabeled_phase_one_targets = true,
+})
 
 -- Configure indent-blankline for indentation guides
 require("ibl").setup {
@@ -344,11 +346,6 @@ vim.g.mapleader = " " -- Set leader key to space
 vim.cmd('colorscheme rose-pine') -- Set default colorscheme
 vim.cmd('hi LineNr guifg=#FFFF00')
 
--- Hopper Highlight settings for hop.nvim
-vim.cmd('hi HopNextKey guifg=#FFFFFF')
-vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
-vim.cmd('hi HopNextKey2 guifg=#00FF00')
-
 -- Keymap Configurations
 -- Basic commands
 vim.api.nvim_set_keymap('n', ':W', ':w', { noremap = true }) -- Save file
@@ -448,9 +445,17 @@ _G.open_nvim_tree_conditional = function()
 end
 
 -- Navigation and plugin keymaps
-vim.api.nvim_set_keymap('n', '<F1>', ':HopWord<CR>', { noremap = true }) -- Hop to word in normal mode
-vim.api.nvim_set_keymap('i', '<F1>', '<Esc>:HopWord<CR>', { noremap = true }) -- Hop to word in insert mode
-vim.api.nvim_set_keymap('v', '<F1>', '<Esc>:HopWord<CR>', { noremap = true }) -- Hop to word in insert mode
+vim.keymap.set({'n', 'x', 'o'}, '<F1>', function()
+  require('leap').leap {
+    target_windows = { vim.api.nvim_get_current_win() }
+  }
+end)
+vim.keymap.set('i', '<F1>', function()
+  vim.cmd('stopinsert')  -- Exit insert mode
+  require('leap').leap {
+    target_windows = { vim.api.nvim_get_current_win() }
+  }
+end)
 vim.api.nvim_set_keymap('n', '<F2>', ':nohlsearch<CR>', { noremap = true }) -- Clear search highlights
 vim.api.nvim_set_keymap('i', '<F2>', '<Esc>:nohlsearch<CR>', { noremap = true }) -- Clear search highlights
 vim.api.nvim_set_keymap('v', '<F2>', '<Esc>:nohlsearch<CR>', { noremap = true }) -- Clear search highlights
@@ -500,11 +505,6 @@ _G.set_colorscheme_and_highlight = function(colorscheme)
   else
     vim.cmd('hi LineNr guifg=#FFFFFF') -- Fallback to white
   end
-
-  -- Reapply hop.nvim highlight settings after colorscheme change
-  vim.cmd('hi HopNextKey guifg=#FFFFFF')
-  vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
-  vim.cmd('hi HopNextKey2 guifg=#00FF00')
 end
 
 -- Colorscheme keymaps
