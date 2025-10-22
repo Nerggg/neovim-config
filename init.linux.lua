@@ -258,20 +258,17 @@ cmp.setup({
 })
 
 -- Setup LSP capabilities for autocompletion
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
--- Configure LSP servers
-local lspconfig = require('lspconfig')
-
-lspconfig.pyright.setup({
+vim.lsp.config('pyright', {
   capabilities = capabilities,
 })
 
-lspconfig.clangd.setup({
+vim.lsp.config('clangd', {
   capabilities = capabilities,
 })
 
-lspconfig.intelephense.setup({
+vim.lsp.config('intelephense', {
   capabilities = capabilities,
 })
 
@@ -281,7 +278,7 @@ local paths = {
 	pack_path = "/site/pack/core/opt/",
 }
 
-lspconfig.ts_ls.setup({
+vim.lsp.config('ts_ls', {
 	filetypes = {
 		"javascript",
 		"javascriptreact",
@@ -301,7 +298,7 @@ lspconfig.ts_ls.setup({
 	},
 })
 
-lspconfig.dartls.setup({
+vim.lsp.config('dartls', {
   capabilities = capabilities,
   cmd = { "dart", "language-server", "--protocol=lsp" },
   filetypes = { "dart" },
@@ -320,6 +317,12 @@ lspconfig.dartls.setup({
     },
   },
 })
+
+vim.lsp.enable('pyright')
+vim.lsp.enable('clangd')
+vim.lsp.enable('intelephense')
+vim.lsp.enable('ts_ls')
+vim.lsp.enable('dartls')
 
 -- LSP keymappings
 vim.api.nvim_create_autocmd('LspAttach', {
