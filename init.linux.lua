@@ -508,6 +508,7 @@ vim.api.nvim_set_keymap('n', '<F6>', ':lua require("lint").try_lint()<CR>', { no
 vim.api.nvim_set_keymap('n', '<F7>', ':Gitsigns toggle_signs<CR>', { noremap = true, silent = true }) -- Toggle git signs
 -- vim.api.nvim_set_keymap('n', '<F8>', ':Gitsigns toggle_current_line_blame<CR>', { noremap = true, silent = true }) -- Toggle git blame
 vim.api.nvim_set_keymap('n', '<F8>', ':Gitsigns blame<CR>', { noremap = true, silent = true }) -- Toggle git blame
+vim.api.nvim_set_keymap('n', '<F9>', ':Markview<CR>', { noremap = true, silent = true }) -- Toggle git blame
 vim.api.nvim_set_keymap('n', '<F11>', ':source $MYVIMRC<CR>', { noremap = true }) -- Reload config
 vim.api.nvim_set_keymap('n', '<F12>', ':e $MYVIMRC<CR>', { noremap = true }) -- Edit config
 
@@ -754,16 +755,16 @@ vim.api.nvim_set_keymap('n', '<C-o>', ':Gitsigns reset_hunk<CR>', { noremap = tr
 -- sudo ln -s /usr/local/nvim/bin/nvim /usr/local/bin/nvim
 
 -- installed lsp 
---  Installed
---    ✓ clangd
---    ✓ docker-compose-language-service docker_compose_language_service
---    ✓ dockerfile-language-server dockerls
---    ✓ pyright
---    ✓ typescript-language-server ts_ls
---    ✓ tailwindcss-language-server tailwindcss
---
---  Installed
---    ✓ pyright
---    ✓ tailwindcss-language-server tailwindcss
---    ✓ clangd
---    ✓ typescript-language-server ts_ls
+-- pyright
+-- tailwindcss-language-server
+-- vue-language-server vue_ls, vue_ls
+-- typescript-language-server ts_ls, ts_ls
+-- clangd
+-- gopls
+-- intelephense
+-- texlab
+
+-- clangd
+-- intelephense
+-- pyright
+-- typescript-language-server ts_ls
