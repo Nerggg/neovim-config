@@ -385,12 +385,18 @@ vim.o.laststatus = 2 -- Always show status line
 -- vim.o.shiftwidth = 4 -- Indentation width
 vim.g.mapleader = " " -- Set leader key to space
 vim.cmd('colorscheme rose-pine') -- Set default colorscheme
-vim.cmd('hi LineNr guifg=#FFFF00')
 
--- Hopper Highlight settings for hop.nvim
-vim.cmd('hi HopNextKey guifg=#FFFFFF')
-vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
-vim.cmd('hi HopNextKey2 guifg=#00FF00')
+if vim.o.background == 'dark' then
+  vim.cmd('hi LineNr guifg=#FFFF00')
+  vim.cmd('hi HopNextKey guifg=#FFFFFF')
+  vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
+  vim.cmd('hi HopNextKey2 guifg=#00FF00')
+elseif vim.o.background == 'light' then
+  vim.cmd('hi LineNr guifg=#000000')
+  vim.cmd('hi HopNextKey guifg=#000000')
+  vim.cmd('hi HopNextKey1 guifg=#000000')
+  vim.cmd('hi HopNextKey2 guifg=#FF0000')
+end
 
 -- Keymap Configurations
 -- Basic commands
@@ -547,19 +553,44 @@ _G.set_colorscheme_and_highlight = function(colorscheme)
 
   -- Set LineNr color based on colorscheme for high contrast
   if colorscheme == 'kanagawa' then
-    vim.cmd('hi LineNr guifg=#FFFF00') -- Soft off-white from Kanagawa for high contrast against dark background
+    if vim.o.background == 'dark' then
+      vim.cmd('hi LineNr guifg=#FFFF00')
+      vim.cmd('hi HopNextKey guifg=#FFFFFF')
+      vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
+      vim.cmd('hi HopNextKey2 guifg=#00FF00')
+    elseif vim.o.background == 'light' then
+      vim.cmd('hi LineNr guifg=#000000')
+      vim.cmd('hi HopNextKey guifg=#000000')
+      vim.cmd('hi HopNextKey1 guifg=#000000')
+      vim.cmd('hi HopNextKey2 guifg=#FF0000')
+    end
   elseif colorscheme == 'rose-pine' then
-    vim.cmd('hi LineNr guifg=#FFFF00') -- Subtle lavender from Rose Pine for contrast and harmony
+    if vim.o.background == 'dark' then
+      vim.cmd('hi LineNr guifg=#FFFF00')
+      vim.cmd('hi HopNextKey guifg=#FFFFFF')
+      vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
+      vim.cmd('hi HopNextKey2 guifg=#00FF00')
+    elseif vim.o.background == 'light' then
+      vim.cmd('hi LineNr guifg=#000000')
+      vim.cmd('hi HopNextKey guifg=#000000')
+      vim.cmd('hi HopNextKey1 guifg=#000000')
+      vim.cmd('hi HopNextKey2 guifg=#FF0000')
+    end
   elseif colorscheme == 'everforest' then
-    vim.cmd('hi LineNr guifg=#00FF00') -- Warm off-white from Everforest for clear visibility
+    if vim.o.background == 'dark' then
+      vim.cmd('hi LineNr guifg=#00FF00')
+      vim.cmd('hi HopNextKey guifg=#FFFFFF')
+      vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
+      vim.cmd('hi HopNextKey2 guifg=#00FF00')
+    elseif vim.o.background == 'light' then
+      vim.cmd('hi LineNr guifg=#000000')
+      vim.cmd('hi HopNextKey guifg=#000000')
+      vim.cmd('hi HopNextKey1 guifg=#000000')
+      vim.cmd('hi HopNextKey2 guifg=#FF0000')
+    end
   else
-    vim.cmd('hi LineNr guifg=#FFFFFF') -- Fallback to white
+    vim.cmd('hi LineNr guifg=#FFFFFF')
   end
-
-  -- Reapply hop.nvim highlight settings after colorscheme change
-  vim.cmd('hi HopNextKey guifg=#FFFFFF')
-  vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
-  vim.cmd('hi HopNextKey2 guifg=#00FF00')
 end
 
 -- Colorscheme keymaps
@@ -572,6 +603,33 @@ vim.api.nvim_set_keymap('n', '<leader>2',
 vim.api.nvim_set_keymap('n', '<leader>3',
   [[<Cmd>lua set_colorscheme_and_highlight('everforest')<CR>]],
   { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>4", function()
+  if vim.o.background == "dark" then
+    vim.o.background = "light"
+    if vim.g.colors_name == 'kanagawa' then
+      vim.cmd('hi LineNr guifg=#000000')
+    elseif vim.g.colors_name == 'rose-pine' then
+      vim.cmd('hi LineNr guifg=#000000')
+    elseif vim.g.colors_name == 'everforest' then
+      vim.cmd('hi LineNr guifg=#000000')
+    end
+    vim.cmd('hi HopNextKey guifg=#000000')
+    vim.cmd('hi HopNextKey1 guifg=#000000')
+    vim.cmd('hi HopNextKey2 guifg=#FF0000')
+  else
+    vim.o.background = "dark"
+    if vim.g.colors_name == 'kanagawa' then
+      vim.cmd('hi LineNr guifg=#FFFF00')
+    elseif vim.g.colors_name == 'rose-pine' then
+      vim.cmd('hi LineNr guifg=#FFFF00')
+    elseif vim.g.colors_name == 'everforest' then
+      vim.cmd('hi LineNr guifg=#00FF00')
+    end
+    vim.cmd('hi HopNextKey guifg=#FFFFFF')
+    vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
+    vim.cmd('hi HopNextKey2 guifg=#00FF00')
+  end
+end, { desc = "Toggle background light/dark", noremap = true, silent = true })
 
 -- Tab Navigation
 vim.api.nvim_set_keymap('n', '<C-t>', ':tabnew<CR>', { noremap = true, silent = true }) -- Create new tab

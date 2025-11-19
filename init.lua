@@ -342,12 +342,18 @@ vim.o.laststatus = 2 -- Always show status line
 -- vim.o.shiftwidth = 4 -- Indentation width
 vim.g.mapleader = " " -- Set leader key to space
 vim.cmd('colorscheme rose-pine') -- Set default colorscheme
-vim.cmd('hi LineNr guifg=#FFFF00')
 
--- Hopper Highlight settings for hop.nvim
-vim.cmd('hi HopNextKey guifg=#FFFFFF')
-vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
-vim.cmd('hi HopNextKey2 guifg=#00FF00')
+if vim.o.background == 'dark' then
+  vim.cmd('hi LineNr guifg=#FFFF00')
+  vim.cmd('hi HopNextKey guifg=#FFFFFF')
+  vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
+  vim.cmd('hi HopNextKey2 guifg=#00FF00')
+elseif vim.o.background == 'light' then
+  vim.cmd('hi LineNr guifg=#000000')
+  vim.cmd('hi HopNextKey guifg=#000000')
+  vim.cmd('hi HopNextKey1 guifg=#000000')
+  vim.cmd('hi HopNextKey2 guifg=#FF0000')
+end
 
 -- Keymap Configurations
 -- Basic commands
@@ -460,11 +466,23 @@ vim.api.nvim_set_keymap('n', '<F3>', ':lua _G.open_nvim_tree_conditional()<CR>',
 -- vim.api.nvim_set_keymap('n', '<F3>', ':NvimTreeOpen<CR>', { noremap = true }) -- Open nvim-tree
 vim.api.nvim_set_keymap('n', '<F4>', ':Mason<CR>', { noremap = true }) -- Open Mason
 vim.api.nvim_set_keymap('n', '<F5>', ':GuessIndent<CR>', { noremap = true }) -- Run guess-indent
-vim.api.nvim_set_keymap('n', '<F5>a', ':set shiftwidth=', { noremap = true }) -- Run guess-indent
+vim.keymap.set('n', '<F5>a', function()
+  local input = vim.fn.input("Enter tab size: ")
+  local n = tonumber(input)
+  if n then
+    vim.opt.tabstop = n
+    vim.opt.shiftwidth = n
+    vim.opt.softtabstop = n
+    print("Tab size set to " .. n)
+  else
+    print("Invalid number!")
+  end
+end, { noremap = true, desc = "Change tab width dynamically" })
 vim.api.nvim_set_keymap('n', '<F6>', ':lua require("lint").try_lint()<CR>', { noremap = true }) -- Run linter
 vim.api.nvim_set_keymap('n', '<F7>', ':Gitsigns toggle_signs<CR>', { noremap = true, silent = true }) -- Toggle git signs
 -- vim.api.nvim_set_keymap('n', '<F8>', ':Gitsigns toggle_current_line_blame<CR>', { noremap = true, silent = true }) -- Toggle git blame
 vim.api.nvim_set_keymap('n', '<F8>', ':Gitsigns blame<CR>', { noremap = true, silent = true }) -- Toggle git blame
+vim.api.nvim_set_keymap('n', '<F9>', ':Markview<CR>', { noremap = true, silent = true }) -- Toggle git blame
 vim.api.nvim_set_keymap('n', '<F11>', ':source $MYVIMRC<CR>', { noremap = true }) -- Reload config
 vim.api.nvim_set_keymap('n', '<F12>', ':e $MYVIMRC<CR>', { noremap = true }) -- Edit config
 
@@ -492,19 +510,44 @@ _G.set_colorscheme_and_highlight = function(colorscheme)
 
   -- Set LineNr color based on colorscheme for high contrast
   if colorscheme == 'kanagawa' then
-    vim.cmd('hi LineNr guifg=#FFFF00') -- Soft off-white from Kanagawa for high contrast against dark background
+    if vim.o.background == 'dark' then
+      vim.cmd('hi LineNr guifg=#FFFF00')
+      vim.cmd('hi HopNextKey guifg=#FFFFFF')
+      vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
+      vim.cmd('hi HopNextKey2 guifg=#00FF00')
+    elseif vim.o.background == 'light' then
+      vim.cmd('hi LineNr guifg=#000000')
+      vim.cmd('hi HopNextKey guifg=#000000')
+      vim.cmd('hi HopNextKey1 guifg=#000000')
+      vim.cmd('hi HopNextKey2 guifg=#FF0000')
+    end
   elseif colorscheme == 'rose-pine' then
-    vim.cmd('hi LineNr guifg=#FFFF00') -- Subtle lavender from Rose Pine for contrast and harmony
+    if vim.o.background == 'dark' then
+      vim.cmd('hi LineNr guifg=#FFFF00')
+      vim.cmd('hi HopNextKey guifg=#FFFFFF')
+      vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
+      vim.cmd('hi HopNextKey2 guifg=#00FF00')
+    elseif vim.o.background == 'light' then
+      vim.cmd('hi LineNr guifg=#000000')
+      vim.cmd('hi HopNextKey guifg=#000000')
+      vim.cmd('hi HopNextKey1 guifg=#000000')
+      vim.cmd('hi HopNextKey2 guifg=#FF0000')
+    end
   elseif colorscheme == 'everforest' then
-    vim.cmd('hi LineNr guifg=#00FF00') -- Warm off-white from Everforest for clear visibility
+    if vim.o.background == 'dark' then
+      vim.cmd('hi LineNr guifg=#00FF00')
+      vim.cmd('hi HopNextKey guifg=#FFFFFF')
+      vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
+      vim.cmd('hi HopNextKey2 guifg=#00FF00')
+    elseif vim.o.background == 'light' then
+      vim.cmd('hi LineNr guifg=#000000')
+      vim.cmd('hi HopNextKey guifg=#000000')
+      vim.cmd('hi HopNextKey1 guifg=#000000')
+      vim.cmd('hi HopNextKey2 guifg=#FF0000')
+    end
   else
-    vim.cmd('hi LineNr guifg=#FFFFFF') -- Fallback to white
+    vim.cmd('hi LineNr guifg=#FFFFFF')
   end
-
-  -- Reapply hop.nvim highlight settings after colorscheme change
-  vim.cmd('hi HopNextKey guifg=#FFFFFF')
-  vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
-  vim.cmd('hi HopNextKey2 guifg=#00FF00')
 end
 
 -- Colorscheme keymaps
@@ -517,6 +560,33 @@ vim.api.nvim_set_keymap('n', '<leader>2',
 vim.api.nvim_set_keymap('n', '<leader>3',
   [[<Cmd>lua set_colorscheme_and_highlight('everforest')<CR>]],
   { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>4", function()
+  if vim.o.background == "dark" then
+    vim.o.background = "light"
+    if vim.g.colors_name == 'kanagawa' then
+      vim.cmd('hi LineNr guifg=#000000')
+    elseif vim.g.colors_name == 'rose-pine' then
+      vim.cmd('hi LineNr guifg=#000000')
+    elseif vim.g.colors_name == 'everforest' then
+      vim.cmd('hi LineNr guifg=#000000')
+    end
+    vim.cmd('hi HopNextKey guifg=#000000')
+    vim.cmd('hi HopNextKey1 guifg=#000000')
+    vim.cmd('hi HopNextKey2 guifg=#FF0000')
+  else
+    vim.o.background = "dark"
+    if vim.g.colors_name == 'kanagawa' then
+      vim.cmd('hi LineNr guifg=#FFFF00')
+    elseif vim.g.colors_name == 'rose-pine' then
+      vim.cmd('hi LineNr guifg=#FFFF00')
+    elseif vim.g.colors_name == 'everforest' then
+      vim.cmd('hi LineNr guifg=#00FF00')
+    end
+    vim.cmd('hi HopNextKey guifg=#FFFFFF')
+    vim.cmd('hi HopNextKey1 guifg=#FFFFFF')
+    vim.cmd('hi HopNextKey2 guifg=#00FF00')
+  end
+end, { desc = "Toggle background light/dark", noremap = true, silent = true })
 
 -- Tab Navigation
 vim.api.nvim_set_keymap('n', '<C-t>', ':tabnew<CR>', { noremap = true, silent = true }) -- Create new tab
@@ -711,16 +781,16 @@ vim.api.nvim_set_keymap('n', '<C-o>', ':Gitsigns reset_hunk<CR>', { noremap = tr
 -- sudo ln -s /usr/local/nvim/bin/nvim /usr/local/bin/nvim
 
 -- installed lsp 
---  Installed
---    ✓ clangd
---    ✓ docker-compose-language-service docker_compose_language_service
---    ✓ dockerfile-language-server dockerls
---    ✓ pyright
---    ✓ typescript-language-server ts_ls
---    ✓ tailwindcss-language-server tailwindcss
---
---  Installed
---    ✓ pyright
---    ✓ tailwindcss-language-server tailwindcss
---    ✓ clangd
---    ✓ typescript-language-server ts_ls
+-- pyright
+-- tailwindcss-language-server
+-- vue-language-server vue_ls, vue_ls
+-- typescript-language-server ts_ls, ts_ls
+-- clangd
+-- gopls
+-- intelephense
+-- texlab
+
+-- clangd
+-- intelephense
+-- pyright
+-- typescript-language-server ts_ls
