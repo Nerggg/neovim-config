@@ -272,14 +272,57 @@ vim.lsp.config('intelephense', {
   capabilities = capabilities,
 })
 
+local paths = {
+	config_path = vim.fn.stdpath("config"),
+	data_path = vim.fn.stdpath("data"),
+	pack_path = "/site/pack/core/opt/",
+}
+
 vim.lsp.config('ts_ls', {
+	filetypes = {
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"vue",
+	},
+	init_options = {
+		plugins = {
+			{
+				languages = { "vue" },
+				location = paths.data_path
+					.. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+				name = "@vue/typescript-plugin",
+			},
+		},
+	},
+})
+
+vim.lsp.config('dartls', {
   capabilities = capabilities,
+  cmd = { "dart", "language-server", "--protocol=lsp" },
+  filetypes = { "dart" },
+  root_markers = { "pubspec.yaml" },
+  init_options = {
+    onlyAnalyzeProjectsWithOpenFiles = true,
+    suggestFromUnimportedLibraries = true,
+    closingLabels = true,
+    outline = true,
+    flutterOutline = true,
+  },
+  settings = {
+    dart = {
+      completeFunctionCalls = true,
+      showTodos = true,
+    },
+  },
 })
 
 vim.lsp.enable('pyright')
 vim.lsp.enable('clangd')
 vim.lsp.enable('intelephense')
 vim.lsp.enable('ts_ls')
+vim.lsp.enable('dartls')
 
 -- LSP keymappings
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -772,6 +815,15 @@ vim.api.nvim_set_keymap('n', '<leader>fr', '<cmd>Telescope oldfiles<CR>', { nore
 vim.api.nvim_set_keymap('n', '<C-n>', ':Gitsigns next_hunk<CR>', { noremap = true, silent = true }) -- Next git hunk
 vim.api.nvim_set_keymap('n', '<C-p>', ':Gitsigns prev_hunk<CR>', { noremap = true, silent = true }) -- Previous git hunk
 vim.api.nvim_set_keymap('n', '<C-o>', ':Gitsigns reset_hunk<CR>', { noremap = true, silent = true }) -- Reset current hunk
+
+-- Copy filename and filepath
+vim.keymap.set("n", "<leader>cf", function()
+  vim.fn.setreg("+", vim.fn.expand("%:t"))
+end, { desc = "Copy file name" })
+
+vim.keymap.set("n", "<leader>cp", function()
+  vim.fn.setreg("+", vim.fn.expand("%:p"))
+end, { desc = "Copy full path" })
 
 -- notes
 -- 1. install xclip di linux kalo gabisa pake clipboard
