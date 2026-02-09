@@ -816,6 +816,15 @@ vim.api.nvim_set_keymap('n', '<C-n>', ':Gitsigns next_hunk<CR>', { noremap = tru
 vim.api.nvim_set_keymap('n', '<C-p>', ':Gitsigns prev_hunk<CR>', { noremap = true, silent = true }) -- Previous git hunk
 vim.api.nvim_set_keymap('n', '<C-o>', ':Gitsigns reset_hunk<CR>', { noremap = true, silent = true }) -- Reset current hunk
 
+-- Copy filename and filepath
+vim.keymap.set("n", "<leader>cf", function()
+  vim.fn.setreg("+", vim.fn.expand("%:t"))
+end, { desc = "Copy file name" })
+
+vim.keymap.set("n", "<leader>cp", function()
+  vim.fn.setreg("+", vim.fn.expand("%:p"))
+end, { desc = "Copy full path" })
+
 -- notes
 -- 1. install xclip di linux kalo gabisa pake clipboard
 -- 2. cara install nvim versi baru di linux
