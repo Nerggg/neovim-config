@@ -825,6 +825,8 @@ vim.keymap.set("n", "<leader>cp", function()
   vim.fn.setreg("+", vim.fn.expand("%:p"))
 end, { desc = "Copy full path" })
 
+vim.keymap.set("n", "r", ":e<CR>", { noremap = true, silent = true })
+
 -- notes
 -- 1. install xclip di linux kalo gabisa pake clipboard
 -- 2. cara install nvim versi baru di linux
