@@ -827,6 +827,19 @@ end, { desc = "Copy full path" })
 
 vim.keymap.set("n", "r", ":e<CR>", { noremap = true, silent = true })
 
+vim.keymap.set("n", "<leader>ic", function()
+  local pat = vim.fn.getreg("/")
+  if pat == "" then
+    return
+  end
+
+  if not pat:match("\\c") then
+    pat = "\\c" .. pat
+    vim.fn.setreg("/", pat)
+    vim.fn.search(pat)
+  end
+end, { desc = "Make current search ignore-case (\\c)" })
+
 -- notes
 -- 1. install xclip di linux kalo gabisa pake clipboard
 -- 2. cara install nvim versi baru di linux
