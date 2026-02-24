@@ -380,8 +380,40 @@ vim.api.nvim_create_autocmd("TermOpen", {
   end
 })
 
+-- Fungsi untuk mendapatkan indikator terminal aktif
+local function get_active_terminals()
+  local terminals = require('toggleterm.terminal').get_all()
+  if #terminals == 0 then
+    return ""
+  end
+
+  local active_ids = {}
+  for _, term in ipairs(terminals) do
+    -- Kita ambil ID terminalnya
+    table.insert(active_ids, term.id)
+  end
+
+  -- Urutkan ID agar rapi (1, 2, 4...)
+  table.sort(active_ids)
+
+  -- Format tampilan: [1] [4]
+  local status_str = "  Terminals: "
+  for _, id in ipairs(active_ids) do
+    status_str = status_str .. string.format("[%d] ", id)
+  end
+  
+  return status_str
+end
+
 vim.o.linebreak = true -- Wrap lines at convenient points
 vim.o.laststatus = 2 -- Always show status line
+-- Masukkan fungsi di atas ke dalam lingkup global agar bisa dipanggil statusline
+_G.get_terminal_status = get_active_terminals
+
+-- Set Statusline kustom
+-- %f = filename, %m = modified, %= = pemisah kiri/kanan, %{...} = panggil fungsi
+vim.o.statusline = "%f %m %r %= %{v:lua.get_terminal_status()} %y %p%% %l:%c"
+
 -- vim.o.shiftwidth = 4 -- Indentation width
 vim.g.mapleader = " " -- Set leader key to space
 vim.cmd('colorscheme rose-pine') -- Set default colorscheme
@@ -826,6 +858,19 @@ vim.keymap.set("n", "<leader>cp", function()
 end, { desc = "Copy full path" })
 
 vim.keymap.set("n", "r", ":e<CR>", { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>ic", function()
+  local pat = vim.fn.getreg("/")
+  if pat == "" then
+    return
+  end
+
+  if not pat:match("\\c") then
+    pat = "\\c" .. pat
+    vim.fn.setreg("/", pat)
+    vim.fn.search(pat)
+  end
+end, { desc = "Make current search ignore-case (\\c)" })
 
 -- notes
 -- 1. install xclip di linux kalo gabisa pake clipboard
