@@ -833,6 +833,21 @@ require('gitsigns').setup {
     -- Actions
     map('n', '<leader>td', gs.toggle_deleted) -- Toggle deleted lines
     map('n', '<leader>hi', gs.preview_hunk_inline)
+
+    local auto_preview = false
+    map('n', '<leader>ta', function() 
+      auto_preview = not auto_preview
+      print("Auto Preview: " .. (auto_preview and "On" or "Off"))
+    end)
+
+    vim.api.nvim_create_autocmd("CursorMoved", {
+      buffer = bufnr,
+      callback = function()
+        if auto_preview then
+          gs.preview_hunk_inline()
+        end
+      end,
+    })
   end
 }
 
