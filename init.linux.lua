@@ -832,6 +832,7 @@ require('gitsigns').setup {
     end
     -- Actions
     map('n', '<leader>td', gs.toggle_deleted) -- Toggle deleted lines
+    map('n', '<leader>hi', gs.preview_hunk_inline)
   end
 }
 
